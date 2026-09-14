@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>編集中 – TADORU.</title>
+    <link rel="stylesheet" href="editor.css">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="icons/icon128.png">
+    <link rel="stylesheet" href="web.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="brand">
+            <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4.5h9.5A2.5 2.5 0 0 1 17 7v12.5H7.5A2.5 2.5 0 0 1 5 17V4.5Z"/><path d="M17 8h2v11.5h-2M8 9h6M8 12h6"/></svg></div>
+            <div><strong>TADORU.</strong><span>EDITOR</span></div>
+            <span class="editor-badge">編集画面</span>
+        </div>
+        <div class="document-name">
+            <input id="guideTitle" type="text" maxlength="160" placeholder="ガイドのタイトル">
+            <input id="guideDescription" type="text" maxlength="500" placeholder="ガイドの説明（任意）">
+            <div class="save-line"><span id="saveState">読み込み中</span><button id="coverButton" class="cover-button" type="button" title="表紙の項目（文書番号・版数・作成日・作成部署・機密区分）を入力します。ガイド全体の設定です。表紙は詳細設定または「表示」メニューでONのときだけ出力に付きます" hidden>表紙</button><button id="zoomResetButton" class="frame-reset" type="button" title="Ctrl＋マウスホイールでの拡大を100%に戻します（Ctrl＋0 と同じ）" hidden>画像拡大リセット</button><span id="frameResetWrap" class="frame-reset-wrap" hidden><button id="frameResetButton" class="frame-reset" type="button" title="撮影画像の位置・大きさ・トリミングを、撮影した最初の状態に戻します">画像サイズリセット</button><div id="frameResetMenu" class="frame-reset-menu" hidden><button type="button" data-scope="step">この手順だけ</button><button type="button" data-scope="all">すべて</button></div></span></div>
+        </div>
+        <div class="header-actions">
+            <button id="viewButton" type="button" title="編集画面の表示（ダークモードなど）。詳細設定と同じ内容で、変更はすぐ保存されます" aria-haspopup="true" aria-expanded="false">表示</button>
+            <div id="viewMenu" class="view-menu" hidden>
+                <label><input id="viewDarkMode" type="checkbox" data-setting="darkMode"><span>ダークモード</span></label>
+                <label><input id="viewToolbarPinned" type="checkbox" data-setting="toolbarPinned"><span>ツールバーの詳細を常に表示</span></label>
+                <label><input id="viewCoverPage" type="checkbox" data-setting="coverPage"><span>表紙ページを付ける</span></label>
+                <label><input id="viewTocPage" type="checkbox" data-setting="tocPage"><span>目次ページを付ける</span></label>
+                <button id="viewOpenOptions" type="button">詳細設定を開く…</button>
+            </div>
+            <button id="presentButton" type="button" title="全画面のスライドショーで手順を見せます（F5＝最初から／Shift+F5＝いまの手順から）。Esc で編集画面に戻ります">スライドショー</button>
+            <button id="previewButton" type="button">プレビュー</button>
+            <button id="exportButton" class="primary" type="button">出力</button>
+            <div id="exportMenu" class="export-menu" hidden>
+                <label class="export-orientation">出力形式
+                    <select id="exportFormat">
+                        <option value="print">印刷・PDF</option>
+                        <option value="pptx">PowerPoint（.pptx）</option>
+                        <option value="docx">Word（.docx）</option>
+                        <option value="xlsx">Excel（.xlsx）</option>
+                        <option value="html">HTML</option>
+                        <option value="markdown">Markdown</option>
+                        <option value="mp4">動画（MP4）</option>
+                        <option value="webm">動画（WebM）</option>
+                        <option value="gif">GIF</option>
+                        <option value="json">バックアップ（JSON）</option>
+                    </select>
+                </label>
+                <!-- 操作の動画（v0.7.14）：形式が MP4／WebM／GIF のときだけ表示 -->
+                <label class="export-orientation" id="videoCaptionLabel" hidden>説明文の見せ方
+                    <select id="videoCaption">
+                        <option value="band">画面の下に帯で表示</option>
+                        <option value="overlay">画面に重ねて表示</option>
+                        <option value="none">説明文なし</option>
+                    </select>
+                </label>
+                <label class="export-orientation" id="videoSpeedLabel" hidden>速さ
+                    <select id="videoSpeed">
+                        <option value="0.75">ゆっくり</option>
+                        <option value="1" selected>標準</option>
+                        <option value="1.5">速い</option>
+                    </select>
+                </label>
+                <label class="export-orientation" id="videoWidthLabel" hidden>大きさ（幅）
+                    <select id="videoWidth">
+                        <option value="720">小（720px）</option>
+                        <option value="960">中（960px）</option>
+                        <option value="1280" selected>大（1280px）</option>
+                    </select>
+                </label>
+                <label class="export-orientation" id="pageOrientationLabel">用紙の向き
+                    <select id="pageOrientation">
+                        <option value="portrait">縦（1ページに2枚）</option>
+                        <option value="landscape">横（1ページに1枚）</option>
+                        <option value="custom">カスタマイズ…</option>
+                    </select>
+                </label>
+                <label class="export-orientation" id="paperSizeLabel" title="印刷・PDF、HTML、Word のページの大きさです。PowerPoint はスライドの比率で決まるため使いません">用紙サイズ
+                    <select id="paperSize"></select>
+                </label>
+                <button type="button" id="layoutSummary" class="export-note layout-summary" title="配置を選び直す" hidden></button>
+                <label class="export-orientation" id="pageRangeLabel"><span id="pageRangeTitle">ページ指定</span>
+                    <select id="pageRangeMode">
+                        <option value="all">全ページ</option>
+                        <option value="current">現在のページのみ</option>
+                        <option value="range">ページを指定</option>
+                        <option value="section">セクションを選ぶ</option>
+                    </select>
+                </label>
+                <input id="pageRangeInput" class="export-range" type="text" placeholder="例: 1-3, 5" hidden>
+                <!-- セクションを選ぶ（v0.7.16）：章名のチェックボックス。ガイドに章があるときだけ選択肢に出ます -->
+                <div id="pageRangeSections" class="export-sections" hidden></div>
+                <p id="pageRangeSummary" class="export-note"></p>
+                <label class="export-orientation export-check" id="burnRedactLabel" title="ON：黒塗り（自動マスク・OCR・手動）を画像そのものに描き込みます。受け取った人が動かして下を見ることはできません。OFF：黒塗りも図形として載せるため、PowerPoint などで動かせますが、画像には元の内容が残ります"><input id="burnRedact" type="checkbox" checked><span>黒塗りを画像に焼き込む（受け取った人が剥がせない）</span></label>
+                <label class="export-orientation export-check" id="pptxVideoLabel" hidden title="ガイド全体（またはページ指定の手順）の操作の動画を作り、最後のスライドに置きます。MP4 が作れる PC では動画として、作れないときはGIFの画像として入ります。どちらもスライドショーで再生できます。作成には手順数に応じて時間がかかります"><input id="pptxVideo" type="checkbox"><span>操作の動画を最後のスライドに入れる（MP4／作れないときはGIF）</span></label>
+                <p id="exportFormatNote" class="export-note export-format-note" hidden></p>
+                <button type="button" id="exportRun" class="export-run">出力する</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="workspace">
+        <aside class="sidebar">
+            <div class="sidebar-head">
+                <div class="sidebar-tabs" role="tablist" aria-label="左パネルの切り替え">
+                    <button id="sidebarTabSteps" class="sidebar-tab active" type="button" role="tab" aria-selected="true" data-panel="steps"><strong>手順</strong><span id="stepSummary">0 STEP</span></button>
+                    <button id="sidebarTabDesign" class="sidebar-tab" type="button" role="tab" aria-selected="false" data-panel="design" title="全ページ共通のヘッダー帯・ロゴ・背景色・ページ番号（スライドマスター）"><strong>デザイン</strong></button>
+                </div>
+                <div class="sidebar-tools">
+                    <button id="addSection" class="icon-action" type="button" title="選択中の手順から始まるセクション（章）を追加。見出しをクリックで名前の変更、▾で折りたたみ、⋮⋮でセクションごと並べ替え" aria-label="セクションを追加"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 6h16M4 12h10M4 18h16"/></svg></button>
+                    <button id="addStep" class="icon-action" type="button" title="選択中の手順の次に、白紙の手順を追加" aria-label="手順を追加"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+                    <button id="resumeRecord" class="icon-action" type="button" title="追加で撮影：このガイドに続けて記録します。新しい手順は選択中の手順の直後に入ります。終了はポップアップの「記録を終了」か Alt+Shift+G" aria-label="追加で撮影"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8.5A1.5 1.5 0 0 1 5.5 7H8l1.2-2h5.6L16 7h2.5A1.5 1.5 0 0 1 20 8.5V17a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17V8.5Z"/><circle cx="12" cy="12.5" r="3"/><path d="M19 3v4M17 5h4"/></svg></button>
+                    <button id="mergeGuide" class="icon-action" type="button" title="他のガイドから取り込む：別のガイドの手順をコピーして、選択中の手順の直後に入れます（元のガイドはそのまま）" aria-label="他のガイドから取り込む"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h6v6H4zM14 13h6v6h-6z"/><path d="M10 8h4a3 3 0 0 1 3 3v2"/><path d="M15 11l2 2 2-2"/></svg></button>
+                    <button id="undoDeleteStep" class="icon-action" type="button" title="手順の削除・追加・複製・並べ替えを元に戻す" aria-label="手順の操作を元に戻す" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h11a5 5 0 0 1 0 10h-4"/><path d="M8 5 4 9l4 4"/></svg></button>
+                </div>
+            </div>
+            <div id="stepList" class="step-list"></div>
+            <div id="designPanel" class="design-panel" hidden>
+                <div class="design-scope" role="tablist" aria-label="設定の範囲"><button id="designScopeGuide" class="design-scope-tab active" type="button" data-scope="guide" title="このガイドの全ページに効く設定">ガイド全体</button><button id="designScopeStep" class="design-scope-tab" type="button" data-scope="step" title="選択中の手順（1ページ）だけに効く設定。ガイド全体の設定を上書きします">この手順だけ</button></div>
+                <div class="design-status"><span id="designStatus">詳細設定の既定を使用中</span><button id="designReset" type="button" title="このガイドだけの設定を消して、詳細設定の既定に戻します" hidden>既定に戻す</button></div>
+                <section class="design-group">
+                    <label class="design-row"><strong>ヘッダー帯</strong><input id="designHeaderEnabled" type="checkbox"></label>
+                    <div class="design-fields" id="designHeaderFields">
+                        <div class="design-field"><span>色</span><span class="design-inline"><input id="designHeaderColor" type="color" value="#1b5e20"><label class="design-check"><input id="designHeaderColorNone" type="checkbox" checked>色なし</label></span></div>
+                        <div class="design-field"><span>高さ</span><span class="design-inline"><select id="designHeaderSize" title="小=58 / 中=83 / 大=115"></select><input id="designHeaderHeight" type="number" min="1" max="115" step="1" value="58" title="ページの幅を1280pxとしたときの高さ（px）。1〜115（大）"><span class="design-unit">px</span></span></div>
+                        <label class="design-field"><span>文字</span><select id="designHeaderText"></select></label>
+                        <label class="design-field design-field-wide" id="designHeaderCustomRow"><span>任意の文字</span><input id="designHeaderCustom" type="text" maxlength="120" placeholder="例：社内向け操作マニュアル"></label>
+                        <label class="design-field"><span>文字色</span><input id="designHeaderTextColor" type="color" value="#111111"></label>
+                    </div>
+                </section>
+                <section class="design-group">
+                    <div class="design-row"><strong>ロゴ</strong><span class="design-actions"><button id="designLogoPick" type="button" title="PNG・JPEG・GIF・WebP・SVG。500KBを超える画像は自動で縮小します">取り込み</button><button id="designLogoRemove" type="button" class="danger" hidden>削除</button></span></div>
+                    <input id="designLogoFile" type="file" accept="image/*" hidden>
+                    <div id="designLogoPreview" class="design-logo-preview" hidden><img alt="ロゴ"></div>
+                    <div class="design-fields" id="designLogoFields">
+                        <label class="design-field"><span>位置</span><select id="designLogoPosition"></select></label>
+                        <label class="design-field"><span>大きさ</span><select id="designLogoSize"></select></label>
+                    </div>
+                </section>
+                <section class="design-group">
+                    <label class="design-row"><strong>ページの背景色</strong><input id="designBackground" type="color" value="#ffffff"></label>
+                    <div class="design-row"><strong>テンプレート画像</strong><span class="design-actions"><button id="designBackgroundPick" type="button" title="会社のテンプレートなどをページ全体の背景に敷きます。PNG・JPEG・GIF・WebP・SVG。長辺1920px・1MBを超える画像は自動で縮小します">取り込み</button><button id="designBackgroundRemove" type="button" class="danger" hidden>削除</button></span></div>
+                    <input id="designBackgroundFile" type="file" accept="image/*" hidden>
+                    <div id="designBackgroundPreview" class="design-logo-preview" hidden><img alt="テンプレート画像"></div>
+                    <div class="design-fields" id="designBackgroundFields">
+                        <label class="design-field design-field-wide"><span>合わせ方</span><select id="designBackgroundFit"></select></label>
+                    </div>
+                </section>
+                <section class="design-group">
+                    <label class="design-row"><strong>ページ番号</strong><input id="designPageNumber" type="checkbox"></label>
+                    <div class="design-fields" id="designPageNumberFields">
+                        <label class="design-field"><span>位置</span><select id="designPageNumberAlign"></select></label>
+                    </div>
+                </section>
+                <p class="design-note">帯・ロゴ・ページ番号は、出力1ページ（用紙／スライド1枚）の余白に付きます。撮影画像には重なりません。ページ番号は「3 / 12」の形で、非表示の手順とセクション見出しページは数えません。</p>
+            </div>
+            <div class="sidebar-foot">
+                <button id="guideLibrary" type="button">ガイド一覧</button>
+                <button id="deleteGuide" class="danger-link" type="button" title="このガイド（手順すべて）を削除します。手順1つの削除は、手順カード右のゴミ箱アイコンから">ガイド削除</button>
+            </div>
+        </aside>
+
+        <main class="editor-main">
+            <div class="tool-strip two-row" role="toolbar" aria-label="画像編集ツール">
+                <div class="tool-row tool-row-tools">
+                <button class="tool active" type="button" data-tool="select">選択</button>
+                <button class="tool" type="button" data-tool="blur">ぼかし</button>
+                <button class="tool" type="button" data-tool="redact">黒塗り</button>
+                <button class="tool" type="button" data-tool="highlight" title="四角・円・ブロック矢印などの図形">図形</button>
+                <button class="tool" type="button" data-tool="arrow">矢印</button>
+                <button class="tool" type="button" data-tool="text">文字</button>
+                <button class="tool" type="button" data-tool="marker" title="操作手順番号の枠を追加">操作手順番号</button>
+                <span class="tool-divider"></span>
+                <button class="tool" type="button" data-tool="pen" title="フリーハンドで描きます">ペン</button>
+                <button class="tool" type="button" data-tool="highlighter" title="半透明の太い線で目立たせます">蛍光ペン</button>
+                <button class="tool" type="button" data-tool="eraser" title="なぞった注釈を消します（ぼかし・黒塗り・枠線・矢印・文字・画像・操作手順番号・手書きのすべて）">消しゴム</button>
+                <span class="tool-divider"></span>
+                <button class="tool" type="button" data-tool="image" title="画像の取り込み・移動・拡大縮小・トリミング。撮影画像や貼り付け画像をクリックして選び、ドラッグで動かし、ハンドルで大きさを変えられます（撮影画像を動かすと注釈も一緒に動きます）">画像</button>
+                <button class="tool" type="button" data-tool="zoom" title="部分拡大図：画面の一部をドラッグで囲むと、その範囲を2倍に拡大した図を同じ手順に添えます。元の範囲は赤枠、拡大図は赤枠＋「拡大」の見出しで紐づきます">拡大図</button>
+                <input id="imageInput" type="file" accept="image/*" hidden>
+                <button id="toolbarPin" class="toolbar-pin" type="button" aria-pressed="true" title="ツールバーの詳細（色・太さ・形など）を、常に表示するか、タブだけにするかを切り替えます。タブをダブルクリックでも固定できます">▲</button>
+                </div>
+                <div class="tool-row tool-row-detail">
+                <div class="color-field">
+                    <div class="style-group">
+                    <span id="styleScope" class="style-scope">枠線</span>
+                    <div class="group-controls">
+                    <button id="colorButton" class="color-button" type="button" aria-haspopup="true" aria-expanded="false" title="注釈の色">
+                        <span id="colorChip" class="chip"></span><span class="caret">▾</span>
+                    </button>
+                    <button id="eyedropperButton" class="eyedropper-button" type="button" title="スポイト：画面上の色を拾って、選択中のオブジェクト（またはツール）の色にします" aria-label="スポイト"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="m3 21 1-4 9.5-9.5 3 3L7 20z"/><path d="m14.5 6.5 2-2a2.1 2.1 0 0 1 3 3l-2 2"/><path d="m12 9 3 3"/></svg></button>
+                    <div id="colorPopover" class="color-popover" hidden>
+                        <div class="palette-group">
+                            <span>テーマの色</span>
+                            <div id="themePalette" class="palette"></div>
+                        </div>
+                        <div class="palette-group">
+                            <span>標準の色</span>
+                            <div id="basePalette" class="palette"></div>
+                        </div>
+                        <div class="palette-group" id="recentGroup" hidden>
+                            <span>最近使った色</span>
+                            <div id="recentPalette" class="palette"></div>
+                        </div>
+                        <label class="custom-color">カスタム<input id="annotationColor" type="color" value="#d92d20"></label>
+                    </div>
+                    <select id="annotationSize" title="線の太さ / ぼかしの強さ"></select>
+                    <select id="annotationFont" title="フォント"></select>
+                    </div>
+                    </div>
+                    <div class="style-group" id="arrowGroup" hidden>
+                        <span class="style-scope">矢印の種類</span>
+                        <div class="group-controls">
+                            <label class="field-label" title="線の形（直線／カギ線／L字／コの字／曲線）"><span>線</span><select id="arrowLine"></select></label>
+                            <label class="field-label" title="始点（描き始め）の矢じり（なし／三角／鋭い三角／開いた矢／丸／ひし形）"><span>始点</span><select id="arrowStart"></select></label>
+                            <label class="field-label" title="終点（描き終わり）の矢じり（なし／三角／鋭い三角／開いた矢／丸／ひし形）"><span>終点</span><select id="arrowEnd"></select></label>
+                            <label class="field-label" title="矢じりの大きさ（最小／小／中／大／最大）"><span>大きさ</span><select id="arrowHeadSize"></select></label>
+                            <label class="connect-toggle" title="ONにすると、矢印の端を図形の近くで離したときに上下左右の接続点に吸い付き、図形を動かすと矢印も追従します。OFFにすると接続せず、選択中の矢印は接続が外れます"><input id="arrowConnect" type="checkbox" checked><span>図形に接続</span></label>
+                        </div>
+                    </div>
+                    <div class="style-group" id="textKindGroup" hidden>
+                        <span class="style-scope">文字の種類</span>
+                        <div class="group-controls">
+                            <select id="textKind" title="文字（自動サイズ）：背景が文字にぴったり合います。テキストボックス：ドラッグした枠が箱になり、配置を選べます"></select>
+                            <select id="textAlign" title="左右の配置（テキストボックスのみ有効）" disabled></select>
+                            <select id="textValign" title="上下の配置（テキストボックスのみ有効）" disabled></select>
+                            <select id="textDirection" title="文字列の方向（横書き／縦書き）。文字（自動サイズ）は段落ごとに1列、テキストボックスは枠の高さで折り返します"></select>
+                        </div>
+                    </div>
+                    <div class="style-group" id="textBorderGroup" hidden>
+                        <span class="style-scope">文字の枠線</span>
+                        <div class="group-controls">
+                            <select id="textBorderWidth" title="文字の枠線の太さ"></select>
+                            <button id="textBorderColorButton" class="color-button" type="button" aria-haspopup="true" aria-expanded="false" title="文字の枠線の色">
+                                <span id="textBorderChip" class="chip"></span><span class="caret">▾</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="style-group" id="highlightGroup" hidden>
+                        <span class="style-scope">図形の形</span>
+                        <div class="group-controls">
+                            <select id="highlightShape" title="図形の形（四角／円／角丸／三角／ひし形／六角形／台形／平行四辺形／ブロック矢印）"></select>
+                            <select id="highlightDash" title="枠線の線種（実線／破線／点線）"></select>
+                        </div>
+                    </div>
+                    <div class="style-group" id="highlightFillGroup" hidden>
+                        <span class="style-scope">図形の塗り</span>
+                        <div class="group-controls">
+                            <button id="fillColorButton" class="color-button" type="button" aria-haspopup="true" aria-expanded="false" title="塗りつぶしの色">
+                                <span id="fillChip" class="chip"></span><span class="caret">▾</span>
+                            </button>
+                            <span class="opacity-pair" id="fillOpacityPair" title="塗りつぶしの濃さ（0%で塗りなし）"><input id="fillOpacitySlider" type="range" min="0" max="100" step="5"><input id="fillOpacity" type="number" min="0" max="100" step="1"><span class="unit">%</span></span>
+                        </div>
+                    </div>
+                    <div class="style-group" id="shapeTextGroup" hidden>
+                        <span class="style-scope">図形の文字</span>
+                        <div class="group-controls">
+                            <button id="shapeTextColorButton" class="color-button" type="button" aria-haspopup="true" aria-expanded="false" title="図形の中の文字の色">
+                                <span id="shapeTextChip" class="chip"></span><span class="caret">▾</span>
+                            </button>
+                            <select id="shapeTextSize" title="図形の中の文字の大きさ"></select>
+                            <select id="shapeTextAlign" title="左右の配置"></select>
+                            <select id="shapeTextValign" title="上下の配置"></select>
+                        </div>
+                    </div>
+                    <div class="style-group" id="textBackgroundGroup" hidden>
+                        <span class="style-scope">文字の背景</span>
+                        <div class="group-controls">
+                            <button id="textBackgroundColorButton" class="color-button" type="button" aria-haspopup="true" aria-expanded="false" title="文字の背景色">
+                                <span id="textBackgroundChip" class="chip"></span><span class="caret">▾</span>
+                            </button>
+                            <span class="opacity-pair" id="textBackgroundPair" title="文字の背景の透過"><input id="textBackgroundSlider" type="range" min="0" max="100" step="5"><input id="textBackground" type="number" min="0" max="100" step="1"><span class="unit">%</span></span>
+                        </div>
+                    </div>
+                    <div class="style-group" id="highlighterGroup" hidden>
+                        <span class="style-scope">蛍光ペンの濃さ</span>
+                        <div class="group-controls">
+                            <span class="opacity-pair" id="highlighterOpacityPair" title="蛍光ペンの濃さ"><input id="highlighterOpacitySlider" type="range" min="5" max="100" step="5"><input id="highlighterOpacity" type="number" min="5" max="100" step="1"><span class="unit">%</span></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="style-group" id="orderGroup" hidden>
+                    <span class="style-scope">順序</span>
+                    <div class="group-controls">
+                        <button id="orderFront" type="button" title="最前面へ移動">最前面</button>
+                        <button id="orderForward" type="button" title="前面へ移動">前面</button>
+                        <button id="orderBackward" type="button" title="背面へ移動">背面</button>
+                        <button id="orderBack" type="button" title="最背面へ移動">最背面</button>
+                    </div>
+                </div>
+                <div class="style-group" id="groupGroup" hidden>
+                    <span class="style-scope">グループ</span>
+                    <div class="group-controls">
+                        <button id="groupObjects" type="button" title="選んだオブジェクトをグループ化（Ctrl+G）">グループ化</button>
+                        <button id="ungroupObjects" type="button" title="グループを解除（Ctrl+Shift+G）">解除</button>
+                        <button id="regroupObjects" type="button" title="直前に解除したグループを元に戻す">再グループ化</button>
+                        <span class="group-help" title="選択ツールで、Shiftを押したままクリックすると1つずつ足せます。何もない所からドラッグして囲むと、その中のオブジェクトがまとめて選ばれます（Shift併用で追加）。2つ以上選んでから「グループ化」（Ctrl+G）。">複数選択：Shift+クリック／何もない所からドラッグで囲む</span>
+                    </div>
+                </div>
+                <div class="style-group" id="imageGroup" hidden>
+                    <div class="group-head"><span class="style-scope">撮影画像</span><span class="group-help">画像をクリックして選び、ドラッグで移動・ハンドルで拡大縮小。撮影画像を動かすと注釈も一緒に動きます。出力は常にページの大きさで固定です</span></div>
+                    <div class="group-controls">
+                        <button id="importImage" type="button" title="画像ファイルを取り込みます。画像のない手順ならその手順の撮影画像に、画像がある手順なら上に載せる画像として挿入します">インポート</button>
+                        <button id="cropImage" type="button" title="クリックして選んでいる画像（貼り付け画像を選んでいればそれ、なければ撮影画像）に黒いハンドルが出ます。ドラッグで残す範囲を決め、枠の外をクリックで確定">トリミング</button>
+                        <button id="resetImageFrame" type="button" title="撮影した最初の状態（ページいっぱい・トリミングなし）に撮影画像を戻します。移動・拡大縮小・トリミングをすべて取り消します">最初に戻す</button>
+                        <button id="clearImage" type="button" class="danger" title="この手順の撮影画像と注釈をすべて消して白紙にします（元に戻すで復元できます）">白紙に戻す</button>
+                    </div>
+                </div>
+                <div class="style-group" id="pictureGroup" hidden>
+                    <span class="style-scope">貼り付け画像</span>
+                    <div class="group-controls">
+                        <button id="cropPicture" type="button" title="この画像の残す範囲を決めて切り取ります">トリミング</button>
+                    </div>
+                </div>
+                <div class="style-group" id="cropGroup" hidden>
+                    <span class="style-scope">トリミング中</span>
+                    <div class="group-controls">
+                        <button id="cropDone" type="button" title="この範囲で切り取ります（枠の外をクリック、Enter、Esc でも確定）">完了</button>
+                        <span class="group-help">黒いハンドルをドラッグして残す範囲を決めます。枠の外をクリックか Enter で確定。やり直しは「元に戻す」（Ctrl+Z）</span>
+                    </div>
+                </div>
+                <span class="tool-divider"></span>
+                <button id="undoButton" class="labelled-icon" type="button" disabled title="直前の編集を取り消す（Ctrl+Z）。注釈・文字・画像・書式・操作説明などの編集が対象です"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h11a5 5 0 0 1 0 10h-4"/><path d="M8 5 4 9l4 4"/></svg><span>元に戻す</span></button>
+                <button id="redoButton" class="labelled-icon" type="button" disabled title="取り消した編集をやり直す（Ctrl+Y）"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 9H9a5 5 0 0 0 0 10h4"/><path d="m16 5 4 4-4 4"/></svg><span>やり直す</span></button>
+                <button id="deleteAnnotation" type="button" disabled>選択を削除</button>
+                <button id="clearAnnotations" type="button">注釈を消去</button>
+                </div>
+            </div>
+            <div id="canvasMenu" class="canvas-menu" hidden role="menu">
+                <button type="button" data-menu="copy" role="menuitem">コピー<kbd>Ctrl+C</kbd></button>
+                <button type="button" data-menu="cut" role="menuitem">切り取り<kbd>Ctrl+X</kbd></button>
+                <button type="button" data-menu="paste" role="menuitem">貼り付け<kbd>Ctrl+V</kbd></button>
+                <button type="button" data-menu="duplicate" role="menuitem">複製<kbd>Ctrl+D</kbd></button>
+                <span class="canvas-menu-divider"></span>
+                <button type="button" data-menu="copyFormat" role="menuitem">書式のコピー<kbd>Ctrl+Shift+C</kbd></button>
+                <button type="button" data-menu="pasteFormat" role="menuitem">書式の貼り付け<kbd>Ctrl+Shift+V</kbd></button>
+                <span class="canvas-menu-divider"></span>
+                <span class="canvas-menu-title">オブジェクトの順序</span>
+                <button type="button" data-order="front" role="menuitem">最前面へ移動</button>
+                <button type="button" data-order="forward" role="menuitem">前面へ移動</button>
+                <button type="button" data-order="backward" role="menuitem">背面へ移動</button>
+                <button type="button" data-order="back" role="menuitem">最背面へ移動</button>
+                <span class="canvas-menu-divider"></span>
+                <span class="canvas-menu-title">オブジェクトのグループ化</span>
+                <button type="button" data-group="group" role="menuitem">グループ化</button>
+                <button type="button" data-group="ungroup" role="menuitem">グループ解除</button>
+                <button type="button" data-group="regroup" role="menuitem">再グループ化</button>
+                <span class="canvas-menu-divider"></span>
+                <button type="button" data-menu="delete" role="menuitem">選択を削除</button>
+            </div>
+            <section class="step-editor">
+                <div class="step-index" id="selectedStepIndex">STEP —</div>
+                <div class="step-fields">
+                    <label><span class="field-head">操作説明<span id="descriptionStyleWrap" class="frame-reset-wrap"><button id="descriptionStyleButton" class="cover-button" type="button" title="このガイドのすべての手順の操作説明の語尾を、選んだ調子にまとめて置き換えます（Ctrl+Z で戻せます）。「〜をクリックします」「〜に入力します」などの定型の語尾だけが対象で、手で書いた文でも語尾が一致すれば変わります">語尾をまとめて変換</button><div id="descriptionStyleMenu" class="frame-reset-menu style-menu" hidden></div></span></span><textarea id="stepDescription" rows="2" maxlength="300" placeholder="この手順の説明"></textarea></label>
+                    <div class="meta-row"><span id="pageTitle"></span><a id="pageUrl" href="#" target="_blank" rel="noreferrer"></a></div>
+                </div>
+                <div id="imageBar" class="image-bar" hidden>
+                    <span class="image-bar-title">画像保存</span>
+                    <label class="danger-toggle" title="撮影したままの画面キャプチャを出力します。注釈・文字・操作手順番号・自動マスクの黒塗りなど、書き込みは一切載りません。個人情報がそのまま写るため取り扱いに注意してください"><input id="baseImageOnly" type="checkbox"><span>撮影したまま（書き込みなし）</span></label>
+                    <button id="copyImage" type="button" title="この手順の画像をクリップボードにコピー">コピー</button>
+                    <button id="downloadPng" type="button" title="PNGで保存">PNG</button>
+                    <button id="downloadJpeg" type="button" title="JPEGで保存">JPEG</button>
+                    <button id="ocrMask" type="button" class="ocr-button" title="画像内の文字を検出してマスク：この手順の画像を端末内で文字認識し、詳細設定「プライバシー保護」の条件（メール・電話・郵便番号・6桁以上の数字・独自の語句）に一致する部分を黒塗りします。画像・PDF・画面全体モードで撮った画面など、ページの文字データでは見つけられない番号に使います。認識できない環境では従来の自動マスクのままです">文字を検出してマスク</button>
+                    <button id="engineBadge" type="button" class="engine-badge" title="いまの読み取り方式（詳細設定「プライバシー保護」で変更できます）">読み取り方式：OCR方式</button>
+                    <button id="retakeStep" type="button" class="retake-button" title="撮り直し：この手順のページを新しいタブで開きます。画面を整えて「いまの画面を1枚撮る」（Alt+Shift+S）を押すと、この手順の画像だけが差し替わります（説明文・注釈はそのまま）" hidden>撮り直す</button>
+                    <span id="imageBarState"></span>
+                </div>
+            </section>
+            <p class="record-notice" id="recordNotice" hidden><span id="recordNoticeText">追加で撮影中：操作したページの手順が、選択していた手順の直後に入ります。</span><button id="recordStop" type="button">記録を終了</button></p>
+            <div class="ocr-notice" id="ocrNotice" hidden><span class="ocr-spinner" aria-hidden="true"></span><span id="ocrNoticeText">画像内の文字を検出してマスクしています…</span><span class="ocr-bar"><span id="ocrBar"></span></span><span id="ocrNoticeCount" class="ocr-count"></span></div>
+            <p class="mask-notice" id="maskNotice" hidden>この手順の自動マスクは画像に焼き込まれているため編集できません。編集したい場合は詳細設定で「自動マスクを後から編集できるようにする」を有効にしてから記録し直してください。<button id="openMaskSetting" type="button">詳細設定を開く</button></p>
+            <div id="canvasStage" class="canvas-stage">
+                <textarea id="textEditor" class="text-editor" spellcheck="false" hidden></textarea>
+                <div id="designSheet" class="design-sheet" hidden aria-hidden="true"><div id="designBand" class="design-band"><span id="designBandText"></span></div><img id="designLogoImage" class="design-logo" alt="" hidden><div id="designFoot" class="design-foot"><span id="designFootText"></span></div></div>
+                <button id="zoomBadge" class="zoom-badge" type="button" title="Ctrl＋マウスホイールで拡大縮小。クリックまたは Ctrl＋0 で100%に戻す" hidden>100%</button>
+                <div id="emptyCanvas" class="empty-canvas"><strong>手順を選択してください</strong><span>記録したスクリーンショットをここで編集できます。</span></div>
+                <canvas id="editorCanvas" hidden></canvas>
+            </div>
+            <div id="notesPane" class="notes-pane">
+                <div class="notes-bar"><button id="notesToggle" class="notes-toggle" type="button" aria-expanded="false" aria-controls="stepNotes" title="発表者ノート：スライドショーの発表者ビュー（Sキー）に出す「話すこと」のメモです。印刷・PDF・PowerPoint などの出力には載りません"><span id="notesToggleText">▲ 発表者ノート</span><span id="notesMark" class="notes-mark" hidden>●</span></button><span class="notes-hint">話すこと・出力には載りません</span></div>
+                <textarea id="stepNotes" rows="3" maxlength="2000" placeholder="スライドショーで話す内容のメモ" hidden></textarea>
+            </div>
+            <details id="toolHintArea" class="tool-hint-area"><summary title="編集画面の操作のしかた（ドラッグ＆ドロップ・ショートカットなど）">操作のヒント</summary><p class="tool-hint" id="toolHint">画像のない手順には、画像をドラッグ＆ドロップ・Ctrl+V・「画像」→「インポート」で1枚だけ設定できます。「画像」ツールでは撮影画像そのものを動かす・大きさを変える・トリミングできます（注釈も一緒に動き、出力はページの大きさで固定）。撮影画像は「選択」でも Alt+クリックで選べ、四隅のハンドルで大きさを変え、Ctrl+C／X でコピー・切り取り（切り取ると白紙になり注釈は残る）、Ctrl+V で画像の無い手順なら撮影画像として、ある手順なら画像オブジェクトとして貼り付けられます。何もない場所をダブルクリックすると文字を追加できます。「選択」でオブジェクトをクリックすると白い四角のハンドルが出ます。枠内をドラッグで移動、四隅のハンドルでサイズ変更、Deleteで削除、色と太さはツールバーでその場変更（表示が「操作手順番号*」のように＊付きになります）。ダブルクリックでも選択でき、文字はそのまま再編集。複数選択はShiftを押したままクリック、または何もない所からドラッグして囲む（PowerPointと同じ）。2つ以上選ぶとグループ化（Ctrl+G）／解除（Ctrl+Shift+G）。矢印は「図形に接続」ONで図形の上下左右に吸い付き、図形を動かすと追従（カギ線・コの字はつないだ辺の向きから経路が自動で決まり、黄色いバーで中間の線を動かせます。ダブルクリックで自動位置へ）。Ctrl+C／X／V でコピー・切り取り・貼り付け（別の手順へも可）、Ctrl+D で複製、Ctrl+Shift+C／V で書式のコピー・貼り付け。右クリックでこれらのメニュー。Ctrl+Vで画像・文字を貼り付け。番号は全手順を通して自動で振り直されます。</p></details>
+        </main>
+    </div>
+
+    <dialog id="libraryDialog" class="library-dialog">
+        <form method="dialog" class="dialog-panel">
+            <header><div><strong>ガイド一覧</strong><span>この端末に保存されています</span></div><button value="cancel" aria-label="閉じる">×</button></header>
+            <div class="library-tools"><label class="library-select-all" title="一覧のガイドをすべて選択／解除します"><input id="librarySelectAll" type="checkbox"><span>すべて選択</span></label><span id="libraryState" class="library-state"></span></div>
+            <div id="libraryList" class="library-list"></div>
+            <footer><button id="exportGuidesButton" type="button" disabled title="左のチェックで選んだガイド（手順・画像・注釈を含む）を1つのJSONファイルに書き出します。別のPCへ移すときに使います">エクスポート</button><button id="importButton" type="button" title="ガイド1件のJSON（バックアップ）、または「エクスポート」で作った履歴のJSONを読み込みます">インポート</button><input id="importInput" type="file" accept="application/json,.json" hidden><button value="cancel">閉じる</button></footer>
+        </form>
+    </dialog>
+
+    <dialog id="mergeDialog" class="merge-dialog">
+        <form method="dialog" class="dialog-panel">
+            <header><div><strong>他のガイドから取り込む</strong><span id="mergeSubtitle">取り込むガイドを選んでください。手順はコピーされ、選択中の手順の直後に入ります</span></div><button value="cancel" aria-label="閉じる">×</button></header>
+            <div id="mergeList" class="library-list"></div>
+            <footer><button id="mergeBack" type="button" hidden>ガイドを選び直す</button><button value="cancel" type="submit">閉じる</button><button id="mergeApply" class="primary" type="button" hidden>取り込む</button></footer>
+        </form>
+    </dialog>
+
+    <dialog id="coverDialog" class="cover-dialog">
+        <form method="dialog" class="dialog-panel">
+            <header><div><strong>表紙</strong><span>出力の先頭に付ける表紙の項目です。文書名にはガイド名を使います（このガイドに保存されます。「保存」で確定）</span></div><button id="coverClose" type="button" aria-label="閉じる">×</button></header>
+            <div class="cover-form" id="designCoverGroup">
+                <div class="design-fields">
+                    <label class="design-field design-field-wide"><span>文書番号</span><input id="coverNumber" type="text" maxlength="60" placeholder="例：MAN-2026-001"></label>
+                    <label class="design-field"><span>版数</span><input id="coverVersion" type="text" maxlength="30" placeholder="例：第1.0版"></label>
+                    <label class="design-field"><span>作成日</span><input id="coverDate" type="text" maxlength="30" placeholder="例：2026年9月5日"></label>
+                    <label class="design-field design-field-wide"><span>作成部署</span><input id="coverDepartment" type="text" maxlength="80" placeholder="例：UX企画室"></label>
+                    <label class="design-field"><span>機密区分</span><select id="coverConfidentiality"></select></label>
+                </div>
+                <!-- v0.7.11：文書管理項目（目的・適用範囲・関連文書／承認欄／改訂履歴）。入力があるものだけ出力に載せます -->
+                <details class="cover-section" id="coverTextSection">
+                    <summary>目的・適用範囲・関連文書<span class="cover-section-state" id="coverTextState"></span></summary>
+                    <div class="design-fields">
+                        <label class="design-field design-field-wide"><span>目的</span><textarea id="coverPurpose" rows="2" maxlength="600" placeholder="例：本書は、TSWeb で入居申込を登録する手順を定める。"></textarea></label>
+                        <label class="design-field design-field-wide"><span>適用範囲</span><textarea id="coverScope" rows="2" maxlength="600" placeholder="例：管理部の入居申込担当者が行う登録業務に適用する。"></textarea></label>
+                        <label class="design-field design-field-wide"><span>関連文書（1行に1件）</span><textarea id="coverRelated" rows="2" maxlength="600" placeholder="例：入居審査基準（MAN-2026-002）&#10;個人情報取扱規程"></textarea></label>
+                    </div>
+                </details>
+                <details class="cover-section" id="coverApprovalSection">
+                    <summary>承認欄（作成／確認／承認）<span class="cover-section-state" id="coverApprovalState"></span></summary>
+                    <label class="cover-check"><input id="coverApprovalEnabled" type="checkbox"><span>承認欄を表紙に載せる（押印欄・氏名・日付の3欄）</span></label>
+                    <div class="approval-grid" id="coverApprovalGrid"></div>
+                    <p class="cover-help">見出しは変更できます（例：起案／照査／承認）。氏名・日付が空でも、押印欄として枠だけを出します。</p>
+                </details>
+                <details class="cover-section" id="coverRevisionSection">
+                    <summary>改訂履歴<span class="cover-section-state" id="coverRevisionState"></span></summary>
+                    <div class="revision-table" id="coverRevisionTable"></div>
+                    <div class="revision-actions"><button id="coverRevisionAdd" type="button">行を追加</button><span class="cover-help">1行でもあれば、表紙の次に「改訂履歴」のページを挟みます（版・日付・改訂内容・承認者）。</span></div>
+                </details>
+            </div>
+            <footer class="cover-footer"><span id="coverDirty" class="cover-dirty" hidden>保存していない変更があります</span><button id="coverCancel" type="button">キャンセル</button><button id="coverSave" class="primary" type="button" disabled>保存</button></footer>
+        </form>
+    </dialog>
+
+    <dialog id="layoutDialog" class="layout-dialog">
+        <form method="dialog" class="dialog-panel">
+            <header><div><strong>印刷レイアウト</strong><span>1ページに載せる枚数と並べ方を選びます</span></div><button value="cancel" aria-label="閉じる">×</button></header>
+            <div id="layoutList" class="layout-list"></div>
+            <footer><button value="cancel" type="submit">キャンセル</button><button id="layoutApply" class="primary" type="button">この配置にする</button></footer>
+        </form>
+    </dialog>
+
+    <dialog id="previewDialog" class="preview-dialog">
+        <form method="dialog" class="preview-panel">
+            <header><strong>プレビュー</strong><button value="cancel" aria-label="閉じる">×</button></header>
+            <article id="previewContent" class="guide-preview"></article>
+        </form>
+    </dialog>
+
+    <div id="slideshow" class="slideshow" hidden tabindex="-1" aria-label="スライドショー">
+        <div class="slide-stage">
+            <div id="slideBand" class="slide-band" hidden><span id="slideBandText"></span></div>
+            <img id="slideLogo" class="slide-logo" alt="" hidden>
+            <div class="slide-head"><span id="slideNumber" class="slide-number"></span><h2 id="slideTitle" class="slide-title"></h2></div>
+            <div class="slide-image"><img id="slideImage" alt=""><p id="slideNoImage" class="slide-no-image" hidden>この手順には画像がありません</p></div>
+            <div id="slideCoverMeta" class="slide-cover-meta" hidden></div>
+            <div class="slide-foot"><span id="slideFooterText"></span><span id="slideCounter" class="slide-counter"></span></div>
+        </div>
+        <div id="slideEnd" class="slide-end" hidden><p>スライドショーの最後です。クリックすると編集画面に戻ります。</p></div>
+        <div id="slideBlank" class="slide-blank" hidden></div>
+        <div id="slideGrid" class="slide-grid" hidden></div>
+        <div id="slideJump" class="slide-jump" hidden></div>
+        <canvas id="slideInk" class="slide-ink"></canvas>
+        <canvas id="slideLaserTrail" class="slide-laser-trail" hidden></canvas>
+        <div id="slideLaser" class="slide-laser" hidden></div>
+        <div id="slideNav" class="slide-nav">
+            <button type="button" data-show="prev" title="前へ（←／Backspace／PageUp）">‹</button>
+            <button type="button" data-show="next" title="次へ（→／Enter／Space／PageDown／クリック）">›</button>
+            <button type="button" data-show="grid" title="すべてのスライドを表示（G）">⊞</button>
+            <button type="button" data-show="blank" title="画面を黒にする（B）／白（W）">■</button>
+            <button type="button" data-show="laser" title="レーザーポインター（L）。マウスカーソルを隠して赤い点で示します">●</button>
+            <button type="button" data-show="pen" title="ペン（Ctrl＋P）。ドラッグで書き込み、次のスライドで消えます。E：消す">✎</button>
+            <button type="button" data-show="presenter" title="発表者ビュー（S）。発表者ノート・次の手順・経過時間を別ウィンドウに出します">▤</button>
+            <button type="button" data-show="end" title="スライドショーを終了（Esc）">✕</button>
+            <span class="slide-nav-help">Esc：終了　→ / Enter：次へ　← / Backspace：戻る　番号＋Enter：その手順へ　B：黒画面　W：白画面　G：一覧　L：レーザー　Ctrl＋P：ペン　E：ペンを消す　S：発表者ビュー　Home / End：最初 / 最後</span>
+        </div>
+    </div>
+    <script src="web-shim.js"></script>
+    <script src="shared.js"></script>
+    <script src="i18n.js"></script>
+    <script src="pptx.js"></script>
+    <!-- 操作の動画（v0.7.14）：gifenc は CommonJS 形式のため前後の補助スクリプトで読み込みます。いずれも同梱・無改変・外部通信なし -->
+    <script src="video/gifenc-before.js"></script>
+    <script src="video/gifenc.js"></script>
+    <script src="video/gifenc-after.js"></script>
+    <script src="video/webm-muxer.js"></script>
+    <script src="video/mp4-muxer.js"></script>
+    <script src="video.js"></script>
+    <script src="ocr/tesseract.min.js"></script>
+    <script src="ocr.js"></script>
+    <script src="editor.js"></script>
+    <script src="web-editor.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "TADORU. Web",
+  "short_name": "TADORU.",
+  "description": "スマホで撮った画面を、個人情報をマスクした手順書に。すべて端末内で処理します。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1b5e20",
+  "lang": "ja",
+  "icons": [
+    { "src": "icons/icon48.png", "sizes": "48x48", "type": "image/png" },
+    { "src": "icons/icon128.png", "sizes": "128x128", "type": "image/png", "purpose": "any" }
+  ]
+}

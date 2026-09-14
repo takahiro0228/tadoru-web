@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>TADORU. Web</title>
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="icons/icon128.png">
+    <link rel="icon" href="icons/icon32.png">
+    <meta name="theme-color" content="#1b5e20">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header class="top">
+        <img src="icons/icon48.png" alt="" width="28" height="28">
+        <div><strong>TADORU.</strong><span>Web 版　スマホで撮った画面を手順書に</span></div>
+        <a class="ghost" href="options.html" title="表示の既定・プライバシー保護の設定">設定</a>
+    </header>
+
+    <main>
+        <section class="actions">
+            <label class="action primary">
+                <input id="pickImages" type="file" accept="image/*" multiple hidden>
+                <strong>スクリーンショットから作る</strong>
+                <span>写真から複数枚を選ぶ。撮影順に手順になります</span>
+            </label>
+            <label class="action">
+                <input id="pickVideo" type="file" accept="video/*" hidden>
+                <strong>画面収録（動画）から作る</strong>
+                <span>画面が切り替わった瞬間を自動で手順に分けます</span>
+            </label>
+            <label class="action">
+                <input id="pickJson" type="file" accept="application/json,.json" multiple hidden>
+                <strong>JSON を読み込む</strong>
+                <span>PC の TADORU. で出したバックアップ／エクスポート</span>
+            </label>
+        </section>
+
+        <section id="progress" class="progress" hidden>
+            <div class="bar"><span id="progressBar"></span></div>
+            <p id="progressText">読み込んでいます…</p>
+        </section>
+
+        <section class="list-head">
+            <strong>ガイド</strong><span id="guideCount">0 件</span>
+            <input id="search" type="search" placeholder="ガイド名で検索">
+        </section>
+        <section id="list" class="list"></section>
+        <p id="empty" class="empty" hidden>まだガイドがありません。上の「スクリーンショットから作る」または「画面収録（動画）から作る」で始めてください。</p>
+    </main>
+
+    <footer class="foot">
+        <span>すべて端末内で処理します。画像やガイドはどこにも送信されません。</span>
+        <span id="version"></span>
+    </footer>
+
+    <video id="probe" muted playsinline hidden></video>
+    <script src="web-shim.js"></script>
+    <script src="shared.js"></script>
+    <script src="i18n.js"></script>
+    <script src="index.js"></script>
+</body>
+</html>

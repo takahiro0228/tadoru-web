@@ -1,0 +1,572 @@
+:root{color-scheme:light;font-family:"Helvetica Neue",Helvetica,Arial,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif;color:#111;background:#f4f4f2}*{box-sizing:border-box}html,body{height:100%;margin:0}button,input,textarea{font:inherit}button{cursor:pointer}.app-header{height:68px;display:grid;grid-template-columns:240px minmax(260px,1fr) 240px;align-items:center;gap:18px;padding:0 20px;border-bottom:1px solid #dedede;background:#fff}.brand{display:flex;align-items:center;gap:10px}.brand-mark{width:36px;height:36px;display:grid;place-items:center;color:#fff;background:#111}.brand-mark svg{width:20px}.brand strong,.brand span{display:block}.brand strong{font-size:13px;letter-spacing:-.02em}.brand span{margin-top:2px;color:#8a8a8a;font-size:8px;letter-spacing:.08em}.document-name{text-align:center}.document-name input{width:min(100%,640px);padding:4px 8px;border:0;border-bottom:1px solid transparent;color:#111;font-size:15px;font-weight:750;text-align:center;outline:none;background:transparent}.document-name input:focus{border-bottom-color:#111}.document-name span{display:block;margin-top:3px;color:#8a8a8a;font-size:8px}.header-actions{position:relative;display:flex;justify-content:flex-end;gap:8px}.header-actions>button{padding:9px 14px;border:1px solid #d8d8d8;color:#333;font-size:10px;font-weight:750;background:#fff}.header-actions>button:hover{border-color:#111}.header-actions .primary{border-color:#111;color:#fff;background:#111}.export-menu{position:absolute;z-index:20;right:0;top:42px;width:180px;padding:5px;border:1px solid #d8d8d8;background:#fff;box-shadow:0 15px 35px rgba(0,0,0,.14)}.export-menu button{width:100%;padding:9px 10px;border:0;color:#333;font-size:10px;text-align:left;background:#fff}.export-menu button:hover{color:#111;background:#f2f2f2}.workspace{height:calc(100% - 68px);display:grid;grid-template-columns:268px minmax(0,1fr)}.sidebar{min-height:0;display:grid;grid-template-rows:auto 1fr auto;border-right:1px solid #dedede;background:#fff}.sidebar-head{display:flex;align-items:center;justify-content:space-between;padding:17px 16px 13px;border-bottom:1px solid #e5e5e5}.sidebar-head>div{display:flex;align-items:baseline;gap:8px}.sidebar-head strong{font-size:12px}.sidebar-head span{color:#8a8a8a;font-size:8px}.sidebar-head button{width:28px;height:28px;border:1px solid #d8d8d8;color:#333;background:#fff}.sidebar-head button:hover{border-color:#111}.step-list{min-height:0;overflow:auto;padding:8px}.step-card{display:grid;grid-template-columns:28px 1fr 22px;align-items:start;gap:8px;padding:11px 8px;border:1px solid transparent;background:#fff;cursor:pointer}.step-card:hover{background:#f6f6f4}.step-card.active{border-color:#111;background:#f5f5f3}.step-number{width:24px;height:24px;display:grid;place-items:center;color:#fff;font-size:9px;font-weight:800;background:#111}.step-card strong,.step-card span{display:block}.step-card strong{display:-webkit-box;overflow:hidden;color:#222;font-size:10px;font-weight:700;line-height:1.45;-webkit-box-orient:vertical;-webkit-line-clamp:2}.step-card span{margin-top:4px;color:#8a8a8a;font-size:8px}.drag-handle{color:#aaa;font-size:13px;text-align:center;cursor:grab}.step-card.dragging{opacity:.35}.sidebar-foot{display:flex;justify-content:space-between;padding:12px;border-top:1px solid #e5e5e5}.sidebar-foot button{padding:7px;border:0;color:#525252;font-size:9px;background:none}.sidebar-foot button:hover{color:#111;text-decoration:underline}.sidebar-foot .danger-link:hover{color:#b42318}.editor-main{min-width:0;min-height:0;display:grid;grid-template-rows:48px minmax(0,1fr) auto}.tool-strip{display:flex;align-items:center;gap:5px;padding:7px 14px;border-bottom:1px solid #dedede;background:#fff}.tool-strip button{padding:7px 9px;border:1px solid transparent;color:#525252;font-size:9px;font-weight:700;background:#fff}.tool-strip button:hover:not(:disabled){color:#111;background:#f2f2f2}.tool-strip button.active{border-color:#111;color:#fff;background:#111}.tool-strip button:disabled{opacity:.35;cursor:default}.tool-divider{height:20px;margin:0 4px;border-left:1px solid #dedede}.target-toggle{display:flex;align-items:center;gap:6px;margin-left:auto;color:#525252;font-size:9px}.target-toggle input{accent-color:#1b5e20}.canvas-stage{position:relative;min-height:0;display:grid;place-items:center;overflow:auto;padding:28px;background-color:#ecece9;background-image:linear-gradient(45deg,#e4e4e1 25%,transparent 25%),linear-gradient(-45deg,#e4e4e1 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#e4e4e1 75%),linear-gradient(-45deg,transparent 75%,#e4e4e1 75%);background-size:18px 18px;background-position:0 0,0 9px,9px -9px,-9px 0}#editorCanvas{display:block;max-width:100%;max-height:100%;background:#fff;box-shadow:0 8px 28px rgba(0,0,0,.16);touch-action:none}#editorCanvas[data-tool]:not([data-tool="select"]){cursor:crosshair}.empty-canvas{text-align:center}.empty-canvas strong,.empty-canvas span{display:block}.empty-canvas strong{font-size:12px}.empty-canvas span{margin-top:6px;color:#737373;font-size:10px}.step-editor{display:grid;grid-template-columns:72px minmax(0,1fr) auto;gap:14px;align-items:start;padding:15px 18px;border-top:1px solid #d8d8d8;background:#fff}.step-index{padding-top:8px;color:#1b5e20;font-size:9px;font-weight:800;letter-spacing:.06em}.step-fields label{display:block;color:#525252;font-size:9px}.step-fields textarea{width:100%;margin-top:5px;padding:9px;border:1px solid #d8d8d8;color:#111;font-size:11px;line-height:1.5;resize:vertical;outline:none}.step-fields textarea:focus{border-color:#111;box-shadow:0 0 0 3px rgba(0,0,0,.07)}.meta-row{display:flex;gap:10px;margin-top:7px;overflow:hidden;color:#8a8a8a;font-size:8px}.meta-row span,.meta-row a{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.meta-row a{color:#737373}.step-actions{display:flex;gap:6px;padding-top:22px}.step-actions button{padding:7px 9px;border:1px solid #dedede;color:#525252;font-size:9px;background:#fff}.step-actions button:hover{border-color:#111;color:#111}dialog{padding:0;border:0;background:transparent}dialog::backdrop{background:rgba(0,0,0,.45)}.dialog-panel,.preview-panel{width:min(760px,calc(100vw - 40px));max-height:calc(100vh - 50px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;margin:0;border:1px solid #d8d8d8;background:#fff;box-shadow:0 20px 60px rgba(0,0,0,.22)}.dialog-panel header,.preview-panel header{display:flex;justify-content:space-between;align-items:center;padding:17px 19px;border-bottom:1px solid #e5e5e5}.dialog-panel header strong,.dialog-panel header span{display:block}.dialog-panel header strong,.preview-panel header strong{font-size:13px}.dialog-panel header span{margin-top:3px;color:#8a8a8a;font-size:9px}.dialog-panel header button,.preview-panel header button{width:30px;height:30px;border:0;color:#525252;font-size:18px;background:#fff}.library-list{overflow:auto;padding:6px 18px}.library-item{display:grid;grid-template-columns:auto 1fr auto;gap:12px;padding:14px 2px;border-bottom:1px solid #e5e5e5;cursor:pointer}.library-item .pick{display:grid;place-items:center;align-self:center;width:22px}.library-item .pick input,.library-select-all input{width:15px;height:15px;margin:0;accent-color:#111;cursor:pointer}.library-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 20px 0}.library-select-all{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#404040;cursor:pointer;user-select:none}.library-state{color:#8a8a8a;font-size:11px}.library-item:hover{background:#fafafa}.library-item strong,.library-item span{display:block}.library-item strong{font-size:11px}.library-item span{margin-top:4px;color:#8a8a8a;font-size:9px}.library-item button{align-self:center;padding:7px 10px;border:1px solid #dedede;background:#fff}.dialog-panel footer{display:flex;justify-content:flex-end;gap:8px;padding:12px 18px;border-top:1px solid #e5e5e5}.dialog-panel footer button{padding:8px 11px;border:1px solid #d8d8d8;color:#333;font-size:9px;background:#fff}.preview-dialog{width:auto;max-width:none}.preview-panel{width:min(940px,calc(100vw - 40px));grid-template-rows:auto minmax(0,1fr)}.guide-preview{overflow:auto;padding:38px 56px;background:#f4f4f2}.preview-sheet{max-width:760px;margin:auto;padding:48px 58px;background:#fff;box-shadow:0 7px 30px rgba(0,0,0,.1)}.preview-sheet h1{margin:0;font-size:26px;letter-spacing:-.035em}.preview-sheet>.description{margin:10px 0 30px;color:#606060;line-height:1.6}.preview-step{margin:0 0 34px}.preview-step h2{display:flex;align-items:center;gap:10px;margin:0 0 12px;font-size:15px}.preview-step h2 span{width:28px;height:28px;display:grid;place-items:center;flex:none;color:#fff;font-size:10px;background:#111}.preview-step img{display:block;max-width:100%;border:1px solid #e1e1e1}.preview-step .no-image{padding:35px;border:1px solid #dedede;color:#8a8a8a;text-align:center;background:#fafafa}.preview-step small{display:block;margin-top:7px;color:#8a8a8a;font-size:8px}@media(max-width:900px){.app-header{grid-template-columns:190px 1fr auto}.workspace{grid-template-columns:220px}.header-actions #previewButton{display:none}.tool-strip{overflow-x:auto}.tool-strip .target-toggle{display:none}.step-editor{grid-template-columns:55px 1fr}.step-actions{grid-column:2;padding-top:0}}
+@media print{.app-header,.sidebar,.tool-strip,.step-editor{display:none!important}.workspace,.editor-main{display:block;height:auto}.canvas-stage{display:none}.preview-dialog{position:static;display:block!important}.preview-panel{width:auto;max-height:none;border:0}.preview-panel>header{display:none}.guide-preview{overflow:visible;padding:0;background:#fff}.preview-sheet{max-width:none;padding:0;box-shadow:none}.preview-step{break-inside:avoid}}
+.document-name input{padding:2px 8px;font-weight:400}.document-name #guideTitle{font-size:14px;font-weight:750}.document-name #guideDescription{color:#737373;font-size:9px}.document-name span{margin-top:1px}
+#editorCanvas[hidden]{display:none!important}.empty-canvas[hidden]{display:none!important}.color-field{position:relative;display:flex;align-items:center;gap:5px;color:#525252;font-size:9px}.color-button{display:flex;align-items:center;gap:4px;padding:4px 6px;border:1px solid #d8d8d8;background:#fff}.color-button:hover{border-color:#111}.color-button .chip{display:block;width:18px;height:16px;border:1px solid rgba(0,0,0,.22);background:#d92d20}.color-button .caret{color:#8a8a8a;font-size:8px}.color-popover{position:absolute;z-index:30;top:33px;left:0;width:244px;padding:11px;border:1px solid #d8d8d8;background:#fff;box-shadow:0 15px 35px rgba(0,0,0,.16)}.color-popover[hidden]{display:none!important}.palette-group{margin-bottom:10px}.palette-group[hidden]{display:none!important}.palette-group>span{display:block;margin-bottom:5px;color:#8a8a8a;font-size:8px;letter-spacing:.04em}.palette{display:grid;grid-template-columns:repeat(10,1fr);gap:3px}.palette button{width:100%;aspect-ratio:1;padding:0;border:1px solid rgba(0,0,0,.18)}.palette button:hover{border-color:#111}.palette button.active{outline:2px solid #111;outline-offset:1px}.custom-color{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-top:9px;border-top:1px solid #ececec;color:#525252;font-size:9px}.custom-color input[type="color"]{width:44px;height:22px;padding:0;border:1px solid #d8d8d8;background:#fff;cursor:pointer}.color-field select{padding:5px 4px;border:1px solid #d8d8d8;color:#333;font-size:9px;background:#fff;cursor:pointer}
+.style-scope{min-width:34px;padding:3px 5px;border:1px solid #ededed;color:#525252;font-size:9px;font-weight:700;text-align:center;background:#fafafa}.palette{gap:2px}.color-field select:disabled,.color-button:disabled{opacity:.35;cursor:not-allowed}
+.editor-main{grid-template-rows:48px auto minmax(0,1fr) auto}.tool-hint{margin:0;padding:6px 14px;border-bottom:1px solid #ededed;color:#8a8a8a;font-size:9px;background:#fbfbfa}#editorCanvas[data-tool="select"]{cursor:default}#editorCanvas[data-tool="text"]{cursor:text}
+.color-button.active{border-color:#111;box-shadow:0 0 0 2px rgba(17,17,17,.16)}
+.step-actions #deleteStep{border-color:#b42318;color:#fff;font-weight:800;background:#b42318}.step-actions #deleteStep:hover:not(:disabled){border-color:#8f1d13;color:#fff;background:#8f1d13}.step-actions #deleteStep:disabled{opacity:.4;cursor:not-allowed}.tool-strip #deleteAnnotation:not(:disabled){border-color:#b42318;color:#b42318}.tool-strip #deleteAnnotation:not(:disabled):hover{color:#fff;background:#b42318}.sidebar-foot .danger-link{color:#b42318;font-weight:750}
+.editor-main{grid-template-rows:48px auto auto minmax(0,1fr) auto}.mask-notice{display:flex;align-items:center;gap:10px;margin:0;padding:7px 14px;border-bottom:1px solid #f0d8b5;color:#8a5a12;font-size:9px;background:#fdf6e9}.mask-notice[hidden]{display:none!important}.mask-notice button{padding:5px 9px;border:1px solid #d8b878;color:#7a4f0d;font-size:9px;font-weight:700;background:#fff}.mask-notice button:hover{border-color:#8a5a12}
+.color-field #annotationFont{max-width:132px}
+.sidebar-tools{display:flex;gap:5px}.icon-action{width:28px;height:28px;display:grid;place-items:center;padding:0;border:1px solid #d8d8d8;color:#404040;background:#fff}.icon-action svg{width:15px;height:15px}.icon-action:hover:not(:disabled){border-color:#111;color:#111}.icon-action:disabled{opacity:.3;cursor:not-allowed}.step-card{grid-template-columns:28px 1fr auto}.step-card-tools{display:flex;align-items:center;gap:3px}.step-card-tools button{width:24px;height:24px;display:grid;place-items:center;padding:0;border:1px solid transparent;color:#9a9a9a;background:transparent}.step-card-tools button svg{width:14px;height:14px}.step-card-tools button:hover{border-color:#d8d8d8;color:#111;background:#fff}.step-card-tools .danger:hover{border-color:#b42318;color:#b42318}
+.editor-main{grid-template-rows:48px auto auto minmax(0,1fr) auto}.step-editor{border-top:0;border-bottom:1px solid #d8d8d8}.step-editor .step-index{padding-top:6px}.step-fields textarea{margin-top:4px}.tool-hint{border-bottom:0;border-top:1px solid #ededed}
+.tool-strip .labelled-icon{display:inline-flex;align-items:center;gap:5px}.tool-strip .labelled-icon svg{width:14px;height:14px}.text-editor{position:absolute;z-index:25;margin:0;padding:2px 4px;border:2px solid #1d4ed8;color:#111;line-height:1.32;resize:none;overflow:hidden;outline:none;background:rgba(255,255,255,.94);box-shadow:0 6px 20px rgba(0,0,0,.18)}.text-editor[hidden]{display:none!important}.color-field #textBackground{max-width:104px}
+.image-bar{position:absolute;z-index:22;right:16px;top:12px;display:flex;align-items:center;gap:6px;padding:6px 8px;border:1px solid #d8d8d8;background:rgba(255,255,255,.96);box-shadow:0 6px 20px rgba(0,0,0,.12)}.image-bar[hidden]{display:none!important}.image-bar label{display:flex;align-items:center;gap:4px;color:#525252;font-size:9px}.image-bar button{padding:5px 9px;border:1px solid #d8d8d8;color:#333;font-size:9px;font-weight:700;background:#fff}.image-bar button:hover{border-color:#111;color:#111}.image-bar #imageBarState{min-width:0;color:#1b5e20;font-size:9px}.canvas-stage.dropping{outline:3px dashed #1d4ed8;outline-offset:-6px;background-color:#eef3fd}.empty-canvas .drop-hint{margin-top:12px;padding:12px 16px;border:1px dashed #b9b9b9;color:#737373;font-size:9px}
+.step-editor{grid-template-columns:64px minmax(0,1fr) auto auto}.image-bar{position:static;right:auto;top:auto;align-self:center;flex-wrap:wrap;justify-content:flex-end;max-width:330px;padding:6px 8px;background:#fafafa;box-shadow:none}.image-bar #imageBarState{flex-basis:100%;text-align:right}.step-actions{padding-top:0;align-self:center}@media(max-width:1180px){.step-editor{grid-template-columns:64px minmax(0,1fr) auto}.image-bar{grid-column:2/-1;justify-content:flex-start;max-width:none}}
+.image-bar .danger-toggle{color:#8f1d13;font-weight:700}.image-bar .danger-toggle input{accent-color:#b42318}.image-bar:has(.danger-toggle input:checked){border-color:#b42318;background:#fdf5f4}
+.export-menu{width:220px}.export-orientation{display:block;padding:8px 10px 10px;border-bottom:1px solid #ededed;color:#8a8a8a;font-size:9px}.export-orientation select{width:100%;margin-top:5px;padding:6px;border:1px solid #d8d8d8;color:#111;font-size:10px;background:#fff}.sidebar{grid-template-rows:auto auto 1fr auto}.undo-bar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;border-bottom:1px solid #f0d8b5;color:#8a5a12;font-size:10px;background:#fdf6e9}.undo-bar[hidden]{display:none!important}.undo-bar button{padding:5px 10px;border:1px solid #b42318;color:#fff;font-size:9px;font-weight:800;background:#b42318}.undo-bar button:hover{background:#8f1d13}.icon-action:disabled{opacity:.45}
+.app-header{position:relative;z-index:60}.export-menu{z-index:70}.image-bar{position:static;z-index:auto}
+.sidebar{grid-template-rows:auto 1fr auto}.icon-action:not(:disabled)#undoDeleteStep{border-color:#111;color:#111}
+html,body{font-family:"Helvetica Neue",Helvetica,Arial,"Hiragino Kaku Gothic ProN",Meiryo,sans-serif}button,input,select,textarea,kbd,output{font-family:inherit}
+#annotationFont option{font-family:revert}
+.preview-sheet{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:none;padding:0;background:transparent;box-shadow:none}.preview-sheet .sheet-page{background:#fff;box-shadow:0 6px 24px rgba(0,0,0,.12)}@media print{.guide-preview{padding:0}.preview-sheet{gap:0}.preview-sheet .sheet-page{box-shadow:none}}
+.preview-panel{width:min(1180px,calc(100vw - 40px))}.guide-preview{padding:18px;overflow:auto}@media print{.guide-preview{zoom:1!important;padding:0}}
+
+/* ---- タイトル・説明：下線と鉛筆アイコンで編集可能なことを示す ---- */
+.document-name input{border-bottom:1px dashed #c9c9c9;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a3a3a3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 20h9'/%3E%3Cpath d='M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 6px center;background-size:11px;padding-right:26px}
+.document-name input:hover{border-bottom-color:#8a8a8a}
+.document-name input:focus{border-bottom:1px solid #111;background-image:none}
+
+/* ---- v0.6.5: ボタンをピル型（完全な丸角）に。色は従来のまま ---- */
+.header-actions>button,.export-menu button,.sidebar-head button,.sidebar-foot button,.tool-strip button,.step-actions button,.dialog-panel header button,.preview-panel header button,.library-item button,.dialog-panel footer button{border-radius:999px}
+
+/* ---- v0.6.8: 文字の背景色・枠線コントロール ---- */
+.mini-color{width:30px;height:24px;padding:1px;border:1px solid #d8d8d8;background:#fff;cursor:pointer;vertical-align:middle}
+.mini-color[hidden],#textBorderWidth[hidden]{display:none!important}
+
+/* ---- v0.6.9: 文字の背景透過（スライダー+数値） ---- */
+.opacity-pair{display:inline-flex;align-items:center;gap:4px}
+.opacity-pair[hidden]{display:none!important}
+.opacity-pair input[type="range"]{width:74px;accent-color:#111}
+.opacity-pair input[type="number"]{width:44px;padding:3px 4px;border:1px solid #d8d8d8;font-size:10px;background:#fff}
+.opacity-pair .unit{color:#8a8a8a;font-size:9px}
+
+/* ---- テキスト入力欄の背景色 ---- */
+.document-name input,#stepDescription,.opacity-pair input[type="number"]{background:#fffde7}
+
+/* ---- v0.6.14: 編集画面の目印（黒バッジ+薄いグレー帯） ---- */
+.app-header{background:#f4f4f2}
+.app-header .editor-badge{flex:none;display:inline-block;margin:0;padding:5px 10px;border-radius:999px;color:#fff;font-size:10px;font-weight:750;letter-spacing:.04em;background:#111}
+
+/* ---- v0.6.15: ツールバー2段化・フリーハンド ---- */
+.editor-main{grid-template-rows:auto auto minmax(0,1fr) auto}
+.tool-strip.two-row{display:block;padding:0}
+.tool-row{display:flex;align-items:center;gap:5px;padding:6px 14px;overflow-x:auto}
+.tool-row-tools{border-bottom:1px solid #ededed}
+.tool-row-detail{background:#fbfbfa}
+#editorCanvas[data-tool="pen"],#editorCanvas[data-tool="highlighter"]{cursor:crosshair}
+#editorCanvas[data-tool="eraser"]{cursor:cell}
+/* 選択ツールだけは保存ボタンと同じ緑にして、いまの状態が分かるようにします。 */
+.tool-strip button.tool[data-tool="select"].active{border-color:#1b5e20;background:#1b5e20}
+
+/* ---- v0.6.20: 詳細行のセクション分け・色ポップオーバーの最前面表示 ---- */
+.color-field{display:flex;align-items:center;gap:0}
+.style-group{display:flex;align-items:center;gap:5px;padding:0 10px;border-left:1px solid #e2e2e2}
+.style-group:first-child{padding-left:0;border-left:0}
+.style-group[hidden]{display:none!important}
+.style-group .style-scope{color:#8a8a8a;font-size:9px;white-space:nowrap}
+.color-popover{position:fixed;z-index:400;top:auto;left:auto}
+
+/* ---- 詳細行：区画名を上段、操作を下段に ---- */
+.style-group{flex-direction:column;align-items:flex-start;gap:2px;padding:2px 10px}
+.style-group .group-controls{display:flex;align-items:center;gap:5px}
+.tool-row-detail{padding:5px 14px}
+
+/* ---- v0.6.21: 印刷レイアウトのカスタマイズとページ指定 ---- */
+.export-menu{width:236px}
+.export-note{margin:0;padding:0 10px 8px;border-bottom:1px solid #ededed;color:#525252;font-size:9px;line-height:1.5}
+.export-note[hidden]{display:none!important}
+.export-range{display:block;width:calc(100% - 20px);margin:8px 10px;padding:6px;border:1px solid #d8d8d8;color:#111;font-size:10px;background:#fffde7}
+.export-range[hidden]{display:none!important}
+.export-range:focus{border-color:#111;outline:none}
+
+.layout-dialog .dialog-panel{width:min(640px,calc(100vw - 40px))}
+.layout-list{overflow:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:16px 18px}
+.layout-card{display:flex;flex-direction:column;align-items:center;gap:7px;padding:11px 8px;border:1px solid #dedede;color:#333;font-size:9px;font-weight:700;text-align:center;background:#fff}
+.layout-card:hover{border-color:#111}
+.layout-card.selected{border-color:#111;box-shadow:inset 0 0 0 1px #111}
+.layout-card .layout-figure{display:grid;gap:2px;padding:3px;border:1px solid #bdbdbd;background:#fff}
+.layout-card.selected .layout-figure{border-color:#111}
+.layout-card .layout-cell{background:#dcdcdc}
+.layout-card.selected .layout-cell{background:#111}
+.layout-card .layout-cell.blank{background:#f4f4f2}
+@media(max-width:640px){.layout-list{grid-template-columns:repeat(2,1fr)}}
+
+.image-bar{position:relative;margin-top:15px}.image-bar-title{position:absolute;top:-15px;left:0;color:#525252;font-size:9px;white-space:nowrap}
+.step-card{position:relative}.step-card.drop-before::after,.step-card.drop-after::after{content:"";position:absolute;left:4px;right:4px;height:3px;background:#1b5e20;pointer-events:none;z-index:2}.step-card.drop-before::after{top:-2px}.step-card.drop-after::after{bottom:-2px}
+
+.canvas-menu{position:fixed;z-index:500;min-width:172px;padding:5px;border:1px solid #d8d8d8;background:#fff;box-shadow:0 15px 35px rgba(0,0,0,.18)}.canvas-menu[hidden]{display:none!important}.canvas-menu button{display:block;width:100%;padding:7px 10px;border:0;color:#333;font-size:10px;text-align:left;background:#fff}.canvas-menu button:hover:not(:disabled){color:#111;background:#f2f2f2}.canvas-menu button:disabled{opacity:.38;cursor:default}.canvas-menu-title{display:block;padding:5px 10px 3px;color:#8a8a8a;font-size:8px;letter-spacing:.04em}.canvas-menu-divider{display:block;margin:4px 0;border-top:1px solid #ececec}#orderGroup .group-controls button{padding:5px 7px;border:1px solid #d8d8d8;color:#333;font-size:9px;background:#fff}#orderGroup .group-controls button:hover:not(:disabled){border-color:#111}#orderGroup .group-controls button:disabled{opacity:.35;cursor:default}
+
+/* ツールバーが横に収まらないときは、縮めずに横スクロールさせます（v0.6.26）。縮むと「元に戻す」などの文字が縦に折り返し、行の高さが変わってキャンバスがずれるためです。 */
+.tool-row>*{flex:none}.tool-row .color-field{flex:none}/* 列が中身の幅まで広がらないようにして、ツールバーがはみ出しても他の高さが変わらないようにします。 */.editor-main{grid-template-columns:minmax(0,1fr)}
+
+/* 「配置：…」は押すとレイアウト選択が開くボタンです（v0.6.27）。「カスタマイズ…」を選び直しても change が起きず開けなかったため。 */
+.layout-summary{display:block;width:100%;padding:6px 10px;border:0;border-bottom:1px solid #ededed;color:#525252;font-size:9px;text-align:left;background:#fff;cursor:pointer}.layout-summary:hover{color:#111;background:#f2f2f2;text-decoration:underline}.layout-summary[hidden]{display:none!important}
+
+#groupGroup .group-controls button{padding:5px 7px;border:1px solid #d8d8d8;color:#333;font-size:9px;background:#fff}#groupGroup .group-controls button:hover:not(:disabled){border-color:#111}#groupGroup .group-controls button:disabled{opacity:.35;cursor:default}
+
+/* 複数選択のやり方（Shift+クリック／囲み選択）の案内。グループ化ボタンの横に小さく出します。 */
+#groupGroup .group-help{margin-left:6px;color:#8a8a8a;font-size:9px;white-space:nowrap;cursor:help}
+
+/* 「画像保存」横の複製・削除ボタンを廃止（手順カードのアイコンと重複していたため）。列も3つに戻します。 */
+.step-editor{grid-template-columns:64px minmax(0,1fr) auto}
+/* 手順一覧の番号（01, 02…）は選択ツールと同じ緑にし、カードの上下中央に置きます。 */
+.step-card .step-number{display:grid;place-items:center;width:24px;height:24px;margin:0;align-self:center;line-height:1;background:#1b5e20}
+
+/* v0.6.29：「画像」ツール（撮影画像の移動・拡大縮小・トリミング）の区画 */
+#imageGroup .group-controls button,#pictureGroup .group-controls button,#cropGroup .group-controls button{padding:5px 7px;border:1px solid #d8d8d8;color:#333;font-size:9px;background:#fff}
+#imageGroup .group-controls button:hover:not(:disabled),#pictureGroup .group-controls button:hover:not(:disabled),#cropGroup .group-controls button:hover:not(:disabled){border-color:#111}
+#imageGroup .group-controls button:disabled,#pictureGroup .group-controls button:disabled{opacity:.35;cursor:default}
+#imageGroup #clearImage:not(:disabled){border-color:#b42318;color:#b42318}#imageGroup #clearImage:not(:disabled):hover{color:#fff;background:#b42318}
+#cropGroup #cropDone{border-color:#1b5e20;color:#1b5e20;font-weight:700}#cropGroup #cropDone:hover{color:#fff;background:#1b5e20}
+#imageGroup .group-help,#cropGroup .group-help{margin-left:6px;color:#8a8a8a;font-size:9px;white-space:nowrap}
+#editorCanvas[data-tool="image"]{cursor:move}
+
+/* v0.6.30：ツールボタン（選択・図形・画像…）をタブ表示に。ポップアップ／詳細設定のタブと同じ「下線がすっと動く」見た目で、下線は緑。 */
+.tool-strip .tool-row-tools{gap:2px;padding:0 14px;border-bottom:1px solid #d8d8d8}
+.tool-strip .tool-row-tools button.tool{position:relative;padding:10px 12px 11px;border:0;border-radius:0;color:#8a8a8a;font-size:9px;font-weight:700;background:none;transition:color .3s ease}
+.tool-strip .tool-row-tools button.tool:hover:not(:disabled){color:#111;background:none}
+.tool-strip .tool-row-tools button.tool.active,.tool-strip .tool-row-tools button.tool[data-tool="select"].active{border:0;color:#1b5e20;background:none}
+.tool-strip .tool-row-tools button.tool::after{content:"";position:absolute;left:8px;right:8px;bottom:-1px;height:2px;background:#1b5e20;transform:scaleX(0);transform-origin:center;transition:transform .3s ease}
+.tool-strip .tool-row-tools button.tool.active::after{transform:scaleX(1)}
+.tool-strip .tool-row-tools .tool-divider{height:16px;margin:0 6px}
+.tool-strip .tool-row-tools button.tool.active:hover{color:#1b5e20}
+
+/* v0.6.31：スライドショー（全画面プレゼン） */
+.slideshow{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;color:#fff;background:#000;cursor:default;user-select:none;outline:none}
+.slideshow[hidden]{display:none!important}
+.slideshow.hide-cursor{cursor:none}
+.slide-stage{display:flex;flex-direction:column;width:100vw;height:100vh;padding:3vh 4vw;box-sizing:border-box}
+.slide-head{display:flex;align-items:center;gap:1.4vw;min-height:7vh;margin-bottom:1.5vh}
+.slide-number{display:grid;place-items:center;flex:none;width:4.4vh;height:4.4vh;border-radius:50%;color:#fff;font-size:2.2vh;font-weight:800;background:#1b5e20}
+.slide-title{margin:0;font-size:3.2vh;font-weight:700;line-height:1.35;letter-spacing:.01em}
+.slide-image{position:relative;display:flex;flex:1;min-height:0;align-items:center;justify-content:center}
+.slide-image img{max-width:100%;max-height:100%;object-fit:contain;box-shadow:0 12px 48px rgba(0,0,0,.6);background:#fff}
+.slide-image img[hidden]{display:none}
+.slide-no-image{margin:0;color:#8a8a8a;font-size:2.4vh}
+.slide-foot{display:flex;justify-content:space-between;align-items:center;min-height:4vh;margin-top:1.5vh;color:#9a9a9a;font-size:1.8vh}
+.slide-end{position:absolute;inset:0;display:grid;place-items:center;background:#000}.slide-end p{margin:0;color:#bbb;font-size:2.4vh}
+.slide-blank{position:absolute;inset:0;background:#000}.slide-blank.white{background:#fff}
+.slide-jump{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:14px 22px;border-radius:8px;color:#fff;font-size:2.6vh;background:rgba(0,0,0,.85);box-shadow:0 0 0 1px rgba(255,255,255,.25)}
+.slide-laser{position:absolute;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#ff1a1a;box-shadow:0 0 12px 4px rgba(255,40,40,.75);pointer-events:none}
+.slide-nav{position:absolute;left:16px;bottom:14px;display:flex;align-items:center;gap:6px;opacity:0;transition:opacity .25s ease}
+.slideshow.show-nav .slide-nav{opacity:1}
+.slide-nav button{width:34px;height:34px;padding:0;border:1px solid rgba(255,255,255,.35);border-radius:50%;color:#fff;font-size:18px;line-height:1;background:rgba(0,0,0,.55);cursor:pointer}
+.slide-nav button:hover{border-color:#fff;background:rgba(255,255,255,.18)}
+.slide-nav-help{margin-left:10px;color:#9a9a9a;font-size:11px;white-space:nowrap}
+.slide-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:18px;padding:40px;overflow:auto;background:rgba(0,0,0,.96);align-content:start}
+.slide-grid button{display:flex;flex-direction:column;gap:8px;padding:0;border:2px solid transparent;border-radius:6px;color:#ddd;font-size:12px;text-align:left;background:none;cursor:pointer}
+.slide-grid button.current{border-color:#1b5e20}.slide-grid button:hover{border-color:#fff}
+.slide-grid img,.slide-grid .slide-grid-empty{width:100%;aspect-ratio:16/10;object-fit:contain;background:#222;border-radius:4px}
+.slide-grid .slide-grid-empty{display:grid;place-items:center;color:#777}
+.slide-grid span{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;padding:0 4px 6px}
+.slide-grid span b{color:#1b5e20;margin-right:6px}
+#presentButton{border-color:#1b5e20;color:#1b5e20;font-weight:700}#presentButton:hover{color:#fff;background:#1b5e20}
+.slideshow [hidden]{display:none!important}
+.slide-foot{position:relative;justify-content:center}.slide-foot .slide-counter{position:absolute;right:0;top:50%;transform:translateY(-50%)}
+
+/* v0.6.31：ヘッダー右上のボタンを1行・角丸なしのフラットなデザインに。3つ並んでも折り返さないよう列幅を auto に。 */
+.app-header{grid-template-columns:240px minmax(200px,1fr) auto}
+.header-actions{gap:6px;align-items:center}
+.header-actions>button{height:32px;padding:0 14px;border:1px solid #d8d8d8;border-radius:4px;color:#333;font-size:10px;font-weight:700;letter-spacing:.02em;white-space:nowrap;background:#fff;transition:background .15s ease,color .15s ease,border-color .15s ease}
+.header-actions>button:hover{border-color:#111;background:#f2f2f2}
+.header-actions .primary{border-color:#111;color:#fff;background:#111}.header-actions .primary:hover{border-color:#333;background:#333}
+.header-actions #presentButton{border-color:#1b5e20;color:#1b5e20;background:#fff}.header-actions #presentButton:hover{color:#fff;background:#1b5e20}
+/* 「編集画面」バッジは赤・四角 */
+.app-header .editor-badge{padding:4px 9px;border-radius:3px;background:#b42318}
+@media(max-width:900px){.app-header{grid-template-columns:190px 1fr auto}}
+
+/* v0.6.32：右クリックメニューのショートカット表記 */
+.canvas-menu button{display:flex;justify-content:space-between;align-items:center;gap:14px}
+.canvas-menu button kbd{color:#9a9a9a;font-family:inherit;font-size:8px;font-weight:400}
+.canvas-menu{min-width:206px}
+
+/* v0.6.33：矢印「図形に接続」トグル */
+.connect-toggle{display:inline-flex;align-items:center;gap:4px;color:#525252;font-size:9px;white-space:nowrap;cursor:pointer}.connect-toggle input{margin:0;accent-color:#1b5e20}
+
+/* v0.6.34：非表示スライドとセクション */
+.step-card.hidden-step{opacity:.5}.step-card.hidden-step .step-number{background:#9a9a9a;font-size:7px}
+.step-card-tools button.eye.off{color:#b42318}
+.section-head{display:flex;align-items:center;gap:6px;margin-top:6px;padding:6px 8px 6px 10px;border-top:1px solid #e5e5e5;border-bottom:1px solid #ededed;background:#f4f4f2;cursor:grab}
+.section-head:first-child{margin-top:0;border-top:0}
+.section-head .section-toggle{width:18px;height:18px;padding:0;border:0;color:#525252;font-size:10px;background:none;cursor:pointer}
+.section-head .section-title{flex:1;min-width:0;overflow:hidden;color:#1b5e20;font-size:10px;font-weight:800;letter-spacing:.03em;text-overflow:ellipsis;white-space:nowrap;cursor:text}
+.section-head .section-title:hover{text-decoration:underline}
+.section-head .section-count{color:#8a8a8a;font-size:8px;white-space:nowrap}
+.section-head .section-remove{width:18px;height:18px;padding:0;border:0;color:#9a9a9a;font-size:12px;line-height:1;background:none;cursor:pointer}
+.section-head .section-remove:hover{color:#b42318}
+.section-head input.section-edit{flex:1;min-width:0;padding:2px 4px;border:1px solid #1b5e20;color:#111;font-size:10px;font-weight:700;background:#fff;outline:none}
+.section-head.drop-before,.section-head.drop-after{position:relative}
+.section-head.drop-before::after,.section-head.drop-after::after{content:"";position:absolute;left:4px;right:4px;height:3px;background:#1b5e20;pointer-events:none;z-index:2}
+.section-head.drop-before::after{top:-2px}.section-head.drop-after::after{bottom:-2px}
+.section-head.dragging{opacity:.4}
+.slideshow.section-slide .slide-head{flex:1;justify-content:center;align-items:center;margin:0}
+.slideshow.section-slide .slide-title{padding-bottom:2.4vh;border-bottom:.7vh solid #1b5e20;font-size:6.5vh;text-align:center}
+.slideshow.section-slide .slide-image{display:none}
+/* ---- デザイン（スライドマスター）v0.6.35 ---- */
+.sidebar-head{padding:0 6px 0 0;gap:4px}
+.sidebar-head>.sidebar-tabs{flex:1 1 auto;display:flex;align-items:stretch;gap:0;min-width:0}.sidebar-head>.sidebar-tools{flex:none;align-items:center}
+.sidebar-head>.sidebar-tools[hidden]{display:none!important}
+.sidebar-tab{position:relative;display:flex;align-items:baseline;gap:5px;min-width:0;padding:17px 8px 13px;border:0!important;border-radius:0!important;color:#8a8a8a;white-space:nowrap;background:none!important;transition:color .3s ease;width:auto!important;height:auto!important}
+.sidebar-tab strong{flex:none;font-size:12px;color:inherit}
+.sidebar-tab span{flex:0 1 auto;min-width:0;max-width:72px;overflow:hidden;color:#8a8a8a;font-size:8px;text-overflow:ellipsis;white-space:nowrap}
+.sidebar-tab::after{content:"";position:absolute;left:8px;right:8px;bottom:-1px;height:2px;background:#1b5e20;transform:scaleX(0);transform-origin:center;transition:transform .3s ease}
+.sidebar-tab.active{color:#1b5e20}
+.sidebar-tab.active::after{transform:scaleX(1)}
+.sidebar-tab:hover:not(.active){color:#111}
+.step-list[hidden]{display:none!important}
+.design-panel{min-height:0;overflow:auto;padding:10px 14px 14px}
+.design-panel[hidden]{display:none!important}
+.design-status{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 6px;color:#8a8a8a;font-size:8px}
+.design-status button{padding:4px 9px;border:1px solid #d8d8d8;border-radius:999px;color:#333;font-size:8px;font-weight:700;background:#fff;white-space:nowrap}
+.design-status button:hover{border-color:#111;color:#111}
+.design-status button[hidden]{display:none!important}
+.design-group{padding:10px 0;border-top:1px solid #ececec}
+.design-row{display:flex;align-items:center;justify-content:space-between;gap:8px;min-height:24px}
+.design-row strong{font-size:10px;color:#222}
+.design-row input[type="checkbox"]{accent-color:#1b5e20;width:15px;height:15px;margin:0}
+.design-actions{display:flex;gap:5px}
+.design-actions button{padding:4px 9px;border:1px solid #d8d8d8;border-radius:999px;color:#333;font-size:8px;font-weight:700;background:#fff}
+.design-actions button:hover{border-color:#111;color:#111}
+.design-actions button.danger{border-color:#e6c7c3;color:#b42318}
+.design-actions button.danger:hover{border-color:#b42318;color:#fff;background:#b42318}
+.design-actions button[hidden]{display:none!important}
+.design-fields{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;margin-top:8px}
+.design-fields[hidden]{display:none!important}
+.design-fields.disabled{opacity:.4;pointer-events:none}
+.design-field{display:flex;flex-direction:column;gap:3px;min-width:0;color:#8a8a8a;font-size:8px}
+.design-field-wide{grid-column:1/-1}
+.design-field[hidden]{display:none!important}
+.design-field select,.design-field input[type="text"]{width:100%;min-width:0;padding:5px 6px;border:1px solid #d8d8d8;color:#111;font-size:9px;background:#fff}
+.design-field .pg-color-button{align-self:flex-start}
+.design-logo-preview{display:flex;align-items:center;justify-content:center;height:56px;margin-top:8px;padding:6px;border:1px dashed #cfcfcf;background:#fafafa}
+.design-logo-preview[hidden]{display:none!important}
+.design-logo-preview img{max-width:100%;max-height:100%;object-fit:contain}
+.design-note{margin:10px 0 0;padding-top:10px;border-top:1px solid #ececec;color:#8a8a8a;font-size:8px;line-height:1.6}
+/* 編集画面キャンバスの周りに出す「ページ」（帯・ロゴ・ページ番号・背景色）。画像には重ねません。 */
+#editorCanvas{position:relative;z-index:1}
+.design-sheet{position:absolute;z-index:0;box-shadow:0 8px 28px rgba(0,0,0,.16);pointer-events:none}
+.design-sheet[hidden]{display:none!important}
+.design-band{position:absolute;display:flex;align-items:center;overflow:hidden;padding:0 3%;font-weight:700;white-space:nowrap;text-overflow:ellipsis}
+.design-band span{overflow:hidden;text-overflow:ellipsis}
+.design-logo{position:absolute;object-fit:contain}
+.design-logo[hidden]{display:none!important}
+.design-foot{position:absolute;display:flex;align-items:center;color:#8a8a8a;padding:0 2%}
+.design-foot span{white-space:nowrap}
+/* スライドショーの帯・ロゴ・背景色（v0.6.35）。高さは画面幅に対する割合（vw）で、印刷・PPTX と同じ比率です。 */
+.slide-band{flex:none;display:flex;align-items:center;overflow:hidden;margin:-3vh -4vw 1.5vh;padding:0 2vw;font-weight:700;white-space:nowrap}
+.slide-band span{overflow:hidden;text-overflow:ellipsis}
+.slide-band[hidden]{display:none!important}
+.slide-logo{position:absolute;z-index:2;object-fit:contain;pointer-events:none}
+.slide-logo[hidden]{display:none!important}
+.slideshow.light-bg .slide-title,.slideshow.light-bg .slide-number{color:#111}
+.slideshow.light-bg .slide-foot,.slideshow.light-bg .slide-no-image{color:#555}
+.slideshow.light-bg .slide-image img{box-shadow:0 10px 36px rgba(0,0,0,.22)}
+.design-inline{display:flex;align-items:center;gap:6px;min-width:0}
+.design-inline select{flex:1 1 auto;min-width:0}
+.design-inline input[type="number"]{width:52px;padding:5px 4px;border:1px solid #d8d8d8;color:#111;font-size:9px;background:#fff}
+.design-unit{color:#8a8a8a;font-size:8px}
+.design-check{display:flex;align-items:center;gap:3px;color:#525252;font-size:8px;white-space:nowrap}
+.design-check input{accent-color:#1b5e20;width:12px;height:12px;margin:0}
+.design-inline .pg-color-button.is-none{opacity:.35}
+/* v0.6.36：設定の範囲（ガイド全体／この手順だけ）・テンプレート画像・ズーム */
+.design-scope{display:flex;gap:0;margin:0 0 8px;border-bottom:1px solid #e5e5e5}
+.design-scope-tab{position:relative;flex:1;padding:8px 4px 9px;border:0;border-radius:0;color:#8a8a8a;font-size:9px;font-weight:700;background:none;white-space:nowrap;transition:color .3s ease}
+.design-scope-tab::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:2px;background:#1b5e20;transform:scaleX(0);transform-origin:center;transition:transform .3s ease}
+.design-scope-tab.active{color:#1b5e20}
+.design-scope-tab.active::after{transform:scaleX(1)}
+.design-scope-tab:hover:not(.active):not(:disabled){color:#111}
+.design-scope-tab:disabled{opacity:.4;cursor:not-allowed}
+.design-sheet{background-repeat:no-repeat}
+.zoom-badge{position:absolute;z-index:23;right:16px;bottom:12px;padding:5px 10px;border:1px solid #d8d8d8;border-radius:999px;color:#333;font-size:9px;font-weight:700;background:rgba(255,255,255,.96);box-shadow:0 6px 20px rgba(0,0,0,.12)}
+.zoom-badge:hover{border-color:#111;color:#111}
+.zoom-badge[hidden]{display:none!important}
+.canvas-stage.zoomed{place-items:start}
+/* 画像サイズリセット（v0.6.36 追補）：どこかの手順で撮影画像の位置・大きさ・トリミングが変わっていると赤く出ます */
+.document-name .save-line{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:1px}
+.document-name .save-line>span#saveState{display:inline-block;margin:0}
+.frame-reset-wrap{position:relative;display:inline-flex}
+.frame-reset-wrap[hidden]{display:none!important}
+.frame-reset{padding:3px 9px;border:1px solid #b42318;border-radius:999px;color:#fff;font-size:8px;font-weight:800;line-height:1.4;background:#b42318;white-space:nowrap}
+.frame-reset:hover{border-color:#8f1d13;background:#8f1d13}
+.frame-reset-menu{position:absolute;z-index:30;left:50%;top:24px;width:132px;padding:4px;border:1px solid #d8d8d8;background:#fff;box-shadow:0 12px 30px rgba(0,0,0,.16);transform:translateX(-50%)}
+.frame-reset-menu[hidden]{display:none!important}
+.frame-reset-menu button{width:100%;padding:7px 8px;border:0;color:#333;font-size:9px;text-align:left;background:#fff}
+.frame-reset-menu button:hover:not(:disabled){color:#b42318;background:#fdf1f0}
+.frame-reset-menu button:disabled{opacity:.4;cursor:not-allowed}
+#zoomResetButton[hidden]{display:none!important}
+/* ツールバーの折りたたみ（v0.6.37）：Excel・PowerPoint のリボンと同じ操作感 */
+.tool-strip .tool-row-tools{position:relative;padding-right:34px}
+.toolbar-pin{position:absolute;right:8px;top:50%;width:22px;height:22px;display:grid;place-items:center;padding:0;border:1px solid transparent!important;border-radius:999px!important;color:#8a8a8a;font-size:9px;line-height:1;background:none;transform:translateY(-50%);transition:color .2s ease}
+.toolbar-pin:hover{border-color:#d8d8d8!important;color:#111}
+.tool-row-detail[hidden]{display:none!important}
+/* 長い説明文は「撮影画像」ラベルの隣（上の行）に置きます（v0.6.37 追補） */
+.style-group .group-head{display:flex;align-items:baseline;gap:6px;min-width:0}
+.style-group .group-head .group-help{margin-left:0;overflow:hidden;text-overflow:ellipsis}
+/* 選択肢の前に小さなラベルを付けます（矢印の始点・終点など・v0.6.38） */
+.group-controls .field-label{display:inline-flex;align-items:center;gap:4px;color:#8a8a8a;font-size:9px;white-space:nowrap}
+.group-controls .field-label>span{flex:none}
+
+/* ---- 発表者ノート・表紙（v0.6.43） ---- */
+.step-notes-label{display:block;margin-top:7px}
+.step-notes-label textarea{min-height:30px;color:#525252;background:#fbfbf9}
+.design-cover-state{margin-left:auto;color:#8a8a8a;font-size:8px;font-weight:400}
+.design-note-tight{margin-top:6px;padding-top:0;border-top:0}
+#designCoverGroup .design-field input[type="text"]{padding:5px 6px;border:1px solid #d8d8d8;font-size:10px;outline:none;background:#fff}
+#designCoverGroup .design-field input[type="text"]:focus{border-color:#111}
+
+/* ---- スライドショーの表紙（v0.6.43） ---- */
+.slideshow.cover-slide .slide-head{flex:0 0 auto;justify-content:center;align-items:center;margin:12vh 0 0}
+.slideshow.cover-slide .slide-title{padding-bottom:2.4vh;border-bottom:.7vh solid #1b5e20;font-size:6.5vh;text-align:center}
+.slideshow.cover-slide .slide-image{display:none}
+.slide-cover-meta{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:1.2vh;padding-bottom:6vh;color:#ddd;font-size:2.2vh}
+.slide-cover-meta .cover-description{margin:0 0 2vh;color:#bbb;font-size:2.4vh;text-align:center;max-width:70vw}
+.slide-cover-meta .cover-mark{position:absolute;top:4vh;right:4vw;padding:.6vh 2vw;border:.35vh solid #e05a4d;color:#e05a4d;font-size:2.4vh;font-weight:800;letter-spacing:.2em}
+.slide-cover-meta .cover-row{display:flex;gap:2vw}.slide-cover-meta .cover-row span:first-child{color:#999}
+.slideshow.light-bg .slide-cover-meta{color:#333}.slideshow.light-bg .slide-cover-meta .cover-description{color:#555}.slideshow.light-bg .slide-cover-meta .cover-row span:first-child{color:#777}
+
+/* ---- スライドショー：レーザー切替・ペン（v0.6.43） ---- */
+.slideshow.laser-on,.slideshow.laser-on *{cursor:none!important}
+.slide-laser-trail{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.slide-ink{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.slideshow.pen-on .slide-ink{pointer-events:auto;cursor:crosshair}
+.slideshow.pen-on .slide-stage{pointer-events:none}
+.slide-nav button.on{border-color:#ff5a5a;color:#ff5a5a}
+
+/* ---- スポイト（v0.6.43） ---- */
+.eyedropper-button{width:28px;height:28px;display:grid;place-items:center;margin-left:4px;border:1px solid #d8d8d8;color:#525252;background:#fff}
+.eyedropper-button:hover{border-color:#111;color:#111}
+.eyedropper-button svg{width:15px}
+.eyedropper-button:disabled{opacity:.35;cursor:default}
+#editorCanvas[data-tool="zoom"]{cursor:zoom-in}
+
+/* ==== ダークモード（v0.6.43）：詳細設定「編集画面をダークモードにする」。画像・出力物には影響しません ==== */
+body.dark-mode{color-scheme:dark;color:#e6e6e6;background:#141414}
+body.dark-mode .app-header,body.dark-mode .sidebar,body.dark-mode .tool-strip,body.dark-mode .tool-row-tools,body.dark-mode .step-editor,body.dark-mode .dialog-panel,body.dark-mode .preview-panel,body.dark-mode .export-menu,body.dark-mode .canvas-menu,body.dark-mode .color-popover,body.dark-mode .image-bar,body.dark-mode .layout-dialog .dialog-panel{background:#1c1c1c;color:#e6e6e6;border-color:#333}
+body.dark-mode .tool-row-detail{background:#181818}
+body.dark-mode .app-header,body.dark-mode .sidebar,body.dark-mode .sidebar-head,body.dark-mode .sidebar-foot,body.dark-mode .tool-strip,body.dark-mode .tool-row-tools,body.dark-mode .step-editor,body.dark-mode .design-group,body.dark-mode .design-note,body.dark-mode .dialog-panel header,body.dark-mode .dialog-panel footer,body.dark-mode .preview-panel header,body.dark-mode .library-item,body.dark-mode .step-notes-label{border-color:#333}
+body.dark-mode .brand strong,body.dark-mode .document-name input,body.dark-mode .sidebar-head strong,body.dark-mode .step-card strong,body.dark-mode .dialog-panel header strong,body.dark-mode .preview-panel header strong,body.dark-mode .library-item strong,body.dark-mode .empty-canvas strong,body.dark-mode .design-row strong,body.dark-mode .step-fields label{color:#eee}
+body.dark-mode .document-name input:focus{border-bottom-color:#eee}
+body.dark-mode .header-actions>button,body.dark-mode .sidebar-head button,body.dark-mode .sidebar-tools button,body.dark-mode .icon-action,body.dark-mode .step-actions button,body.dark-mode .dialog-panel footer button,body.dark-mode .library-item button,body.dark-mode .export-menu button,body.dark-mode .canvas-menu button,body.dark-mode .color-button,body.dark-mode .eyedropper-button,body.dark-mode .image-bar button,body.dark-mode .design-scope-tab,body.dark-mode .design-status button,body.dark-mode .design-actions button{color:#ddd;background:#262626;border-color:#3a3a3a}
+body.dark-mode .header-actions>button:hover,body.dark-mode .step-actions button:hover,body.dark-mode .eyedropper-button:hover,body.dark-mode .color-button:hover{border-color:#eee;color:#fff}
+body.dark-mode .header-actions .primary{border-color:#1b5e20;color:#fff;background:#1b5e20}
+body.dark-mode .export-menu button:hover,body.dark-mode .canvas-menu button:hover{color:#fff;background:#333}
+body.dark-mode .tool-strip button,body.dark-mode .tool-row button.tool{color:#bbb;background:transparent}
+body.dark-mode .tool-strip button:hover:not(:disabled),body.dark-mode .tool-row button.tool:hover:not(:disabled){color:#fff;background:#2c2c2c}
+body.dark-mode .tool-strip button.active,body.dark-mode .tool-row button.tool.active{border-color:#eee;color:#111;background:#eee}
+body.dark-mode .tool-divider,body.dark-mode .style-group{border-color:#3a3a3a}
+body.dark-mode .style-group .style-scope,body.dark-mode .field-label span,body.dark-mode .step-card span,body.dark-mode .sidebar-head span,body.dark-mode .meta-row,body.dark-mode .design-field,body.dark-mode .design-note,body.dark-mode .design-status,body.dark-mode .group-help,body.dark-mode .tool-hint,body.dark-mode .empty-canvas span,body.dark-mode .brand span{color:#9a9a9a}
+body.dark-mode .step-card{background:#1c1c1c}
+body.dark-mode .step-card:hover{background:#262626}
+body.dark-mode .step-card.active{border-color:#eee;background:#2a2a2a}
+body.dark-mode .step-number{color:#111;background:#eee}
+body.dark-mode .sidebar-tab{color:#9a9a9a}body.dark-mode .sidebar-tab.active{color:#fff;border-color:#eee}
+body.dark-mode .canvas-stage{background-color:#262626;background-image:linear-gradient(45deg,#2e2e2e 25%,transparent 25%),linear-gradient(-45deg,#2e2e2e 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#2e2e2e 75%),linear-gradient(-45deg,transparent 75%,#2e2e2e 75%)}
+body.dark-mode select,body.dark-mode input[type="text"],body.dark-mode input[type="number"],body.dark-mode input[type="search"],body.dark-mode textarea{color:#eee;background:#262626;border-color:#3a3a3a}
+body.dark-mode .step-fields textarea:focus,body.dark-mode #designCoverGroup .design-field input[type="text"]:focus{border-color:#eee;box-shadow:0 0 0 3px rgba(255,255,255,.08)}
+body.dark-mode .step-notes-label textarea{color:#ccc;background:#222}
+body.dark-mode .guide-preview{background:#141414}
+body.dark-mode .tool-hint-area,body.dark-mode .tool-hint{background:#181818}
+body.dark-mode .design-sheet{background:#1c1c1c}
+body.dark-mode kbd{color:#ccc;background:#2a2a2a;border-color:#444}
+
+/* ---- 撮り直し（v0.6.43） ---- */
+.retake-button{border-color:#1b5e20!important;color:#1b5e20!important}
+.retake-button.armed{color:#fff!important;background:#1b5e20!important}
+body.dark-mode .document-name input,body.dark-mode #stepDescription,body.dark-mode .opacity-pair input[type="number"],body.dark-mode .export-range,body.dark-mode #guideDescription{color:#f3f3f3;background:#2e2c1f;border-color:#4a4630}
+body.dark-mode #stepDescription::placeholder,body.dark-mode #stepNotes::placeholder,body.dark-mode .document-name input::placeholder{color:#8a8a7a}
+body.dark-mode #designCoverGroup .design-field input[type="text"]{color:#eee;background:#262626;border-color:#3a3a3a}
+body.dark-mode .style-scope{color:#bbb;background:#2a2a2a}
+
+/* ---- v0.6.44：発表者ノートを画像の下に（PowerPoint のノートペイン）・操作のヒントを折りたたみ・表示メニュー ---- */
+.notes-pane{display:grid;border-top:1px solid #d8d8d8;background:#fff}
+.notes-bar{display:flex;align-items:center;gap:10px;padding:0 14px;min-height:28px}
+.notes-toggle{padding:5px 8px;border:0;color:#525252;font-size:9px;font-weight:700;background:none}
+.notes-toggle:hover{color:#111;background:#f2f2f2}
+.notes-toggle[aria-expanded="true"]{color:#111}
+.notes-mark{margin-left:4px;color:#1b5e20;font-size:7px;vertical-align:middle}
+.notes-mark[hidden]{display:none!important}
+.notes-hint{color:#8a8a8a;font-size:8px}
+#stepNotes{width:100%;min-height:64px;margin:0;padding:9px 14px;border:0;border-top:1px solid #ededed;color:#111;font-size:11px;line-height:1.5;resize:vertical;outline:none;background:#fbfbf9}
+#stepNotes:focus{background:#fff}
+#stepNotes[hidden]{display:none!important}
+.tool-hint-area{border-top:1px solid #ededed;background:#fbfbfa}
+.tool-hint-area>summary{padding:5px 14px;color:#8a8a8a;font-size:9px;cursor:pointer;user-select:none}
+.tool-hint-area>summary:hover{color:#111}
+.tool-hint-area .tool-hint{border-top:0;padding-top:0}
+.view-menu{position:absolute;z-index:20;left:0;top:42px;width:210px;padding:6px;border:1px solid #d8d8d8;background:#fff;box-shadow:0 15px 35px rgba(0,0,0,.14)}
+.view-menu[hidden]{display:none!important}
+.view-menu label{display:flex;align-items:center;gap:8px;padding:7px 8px;color:#333;font-size:10px;cursor:pointer}
+.view-menu label:hover{background:#f2f2f2}
+.view-menu input{margin:0;accent-color:#111}
+.view-menu button{width:100%;margin-top:4px;padding:8px 8px;border:0;border-top:1px solid #ededed;color:#525252;font-size:9px;text-align:left;background:#fff}
+.view-menu button:hover{color:#111;background:#f2f2f2}
+body.dark-mode .notes-pane{background:#1c1c1c;border-color:#333}
+body.dark-mode .notes-toggle{color:#bbb}
+body.dark-mode .notes-toggle:hover,body.dark-mode .notes-toggle[aria-expanded="true"]{color:#eee;background:#262626}
+body.dark-mode .notes-hint,body.dark-mode .tool-hint-area>summary{color:#9a9a9a}
+body.dark-mode #stepNotes{color:#ddd;background:#222;border-color:#333}
+body.dark-mode #stepNotes:focus{background:#262626}
+body.dark-mode .tool-hint-area{border-color:#333}
+body.dark-mode .view-menu{background:#1c1c1c;border-color:#333}
+body.dark-mode .view-menu label{color:#ddd}
+body.dark-mode .view-menu label:hover,body.dark-mode .view-menu button:hover{background:#262626}
+body.dark-mode .view-menu button{color:#bbb;background:#1c1c1c;border-color:#333}
+body.dark-mode .view-menu input{accent-color:#eee}
+
+/* ---- v0.6.45：表紙ボタン（タイトル下）・表紙ダイアログ ---- */
+.cover-button{max-width:360px;overflow:hidden;padding:3px 9px;border:1px solid #1b5e20;border-radius:999px;color:#1b5e20;font-size:8px;font-weight:800;line-height:1.4;text-overflow:ellipsis;white-space:nowrap;background:#fff}
+.cover-button:hover{color:#fff;background:#1b5e20}
+.cover-button[hidden]{display:none!important}
+.cover-dialog .dialog-panel{width:min(520px,calc(100vw - 40px))}
+.cover-form{padding:14px 18px 18px}
+.cover-form .design-fields{margin-top:0}
+.cover-form .design-field{font-size:9px}
+.cover-form .design-field input[type="text"],.cover-form .design-field select{padding:7px 8px;border:1px solid #d8d8d8;font-size:11px;outline:none;background:#fff}
+.cover-form .design-field input[type="text"]:focus,.cover-form .design-field select:focus{border-color:#111}
+body.dark-mode .cover-button{color:#9be0a5;border-color:#3c7a44;background:#1c1c1c}
+body.dark-mode .cover-button:hover{color:#111;background:#9be0a5}
+body.dark-mode .cover-form .design-field input[type="text"],body.dark-mode .cover-form .design-field select{color:#eee;background:#262626;border-color:#3a3a3a}
+body.dark-mode .cover-form .design-field input[type="text"]:focus,body.dark-mode .cover-form .design-field select:focus{border-color:#eee}
+/* 出力メニュー（v0.6.45）：形式を先に選び、その形式で使う項目だけを出します */
+.export-orientation[hidden],.export-note[hidden]{display:none!important}
+.export-format-note{padding-top:8px;color:#8a8a8a}
+.export-menu .export-run{display:block;width:calc(100% - 20px);margin:10px 10px 6px;padding:9px 10px;border:1px solid #111;color:#fff;font-size:10px;font-weight:750;text-align:center;background:#111}
+.export-menu .export-run:hover{color:#fff;background:#333}
+body.dark-mode .export-menu .export-run{border-color:#eee;color:#111;background:#eee}
+body.dark-mode .export-menu .export-run:hover{color:#111;background:#fff}
+body.dark-mode .export-format-note{color:#9a9a9a}
+
+/* ---- v0.6.47：追加で撮影・他のガイドから取り込む ---- */
+.record-notice{display:flex;align-items:center;gap:10px;margin:0;padding:7px 14px;border-bottom:1px solid #f1b8b3;color:#8a1f16;font-size:9px;background:#fdecea}
+.record-notice[hidden]{display:none!important}
+.record-notice span{flex:1 1 auto}
+.record-notice button{flex:none;padding:5px 10px;border:1px solid #b42318;color:#fff;font-size:9px;font-weight:700;background:#b42318}
+.record-notice button:hover{background:#8a1f16}
+body.recording-here .canvas-stage,body.recording-here .tool-strip,body.recording-here .step-list{pointer-events:none;opacity:.6}
+body.recording-here .step-list{overflow:hidden}
+.merge-row{display:grid;grid-template-columns:auto 28px minmax(0,1fr);gap:10px;align-items:center;padding:9px 2px;border-bottom:1px solid #e5e5e5;cursor:pointer}
+.merge-row:hover{background:#fafafa}
+.merge-row input{margin:0;accent-color:#111}
+.merge-all{grid-template-columns:auto minmax(0,1fr);padding:8px 2px;color:#525252;font-size:10px;font-weight:700}
+.merge-number{width:24px;height:24px;display:grid;place-items:center;color:#fff;font-size:9px;font-weight:800;background:#111}
+.merge-text{min-width:0}
+.merge-text strong{display:block;overflow:hidden;color:#222;font-size:10px;line-height:1.4;text-overflow:ellipsis;white-space:nowrap}
+.merge-text small{display:block;margin-top:2px;color:#8a8a8a;font-size:8px}
+.merge-dialog .dialog-panel footer .primary{border-color:#111;color:#fff;background:#111}
+.merge-dialog .dialog-panel footer .primary:disabled{opacity:.4;cursor:default}
+body.dark-mode .record-notice{color:#ffb4ad;background:#3a1512;border-color:#5a221d}
+body.dark-mode .merge-row{border-color:#333}
+body.dark-mode .merge-row:hover{background:#262626}
+body.dark-mode .merge-text strong{color:#eee}
+body.dark-mode .merge-all{color:#bbb}
+/* 通知行（追加で撮影・マスク）が出ても、キャンバスが残りの高さを使い続けるように、縦方向の並びを flex にします（v0.6.47） */
+.editor-main{display:flex;flex-direction:column}
+.editor-main>*{flex:none;min-width:0}
+.editor-main>.canvas-stage{flex:1 1 auto;min-height:0}
+/* 手順一覧のボタンが増えたので（追加で撮影・取り込み）、幅が足りないときはボタン列を次の行に折り返します（v0.6.47） */
+.sidebar-head{flex-wrap:wrap;row-gap:8px}
+.sidebar-tools{margin-left:auto}
+
+/* ---- v0.7.0：画像内の文字を検出してマスク（OCR） ---- */
+.image-bar .ocr-button{border-color:#1b5e20;color:#1b5e20}
+.image-bar .ocr-button:hover{color:#fff;background:#1b5e20}
+.image-bar .ocr-button:disabled{opacity:.5;cursor:progress}
+body.dark-mode .image-bar .ocr-button{border-color:#3c7a44;color:#9be0a5;background:#1c1c1c}
+body.dark-mode .image-bar .ocr-button:hover{color:#111;background:#9be0a5}
+
+/* ---- v0.7.2：出力メニュー「黒塗りを画像に焼き込む」 ---- */
+.export-check{display:flex;align-items:flex-start;gap:8px;cursor:pointer;color:#333;font-size:9px;line-height:1.45}
+.export-check input{margin:1px 0 0;accent-color:#111;flex:none}
+.export-check[hidden]{display:none!important}
+body.dark-mode .export-check{color:#ddd}
+body.dark-mode .export-check input{accent-color:#eee}
+
+/* ---- v0.7.3：自動 OCR の進行中の帯 ---- */
+.ocr-notice{display:flex;align-items:center;gap:12px;margin:0;padding:8px 14px;border-bottom:1px solid #bfe0c4;color:#14532d;font-size:10px;font-weight:700;background:#ecf8ee}
+.ocr-notice[hidden]{display:none!important}
+.ocr-spinner{width:12px;height:12px;flex:none;border:2px solid #9be0a5;border-top-color:#1b5e20;border-radius:50%;animation:ocr-spin .9s linear infinite}
+@keyframes ocr-spin{to{transform:rotate(360deg)}}
+.ocr-bar{flex:1 1 auto;height:6px;overflow:hidden;border-radius:999px;background:#d3ecd7}
+.ocr-bar>span{display:block;height:100%;width:0;background:#1b5e20;transition:width .3s ease}
+.ocr-count{flex:none;color:#1b5e20;font-weight:700}
+body.dark-mode .ocr-notice{color:#9be0a5;background:#12261a;border-color:#245232}
+body.dark-mode .ocr-bar{background:#1e3a26}
+body.dark-mode .ocr-bar>span{background:#9be0a5}
+body.dark-mode .ocr-count{color:#9be0a5}
+
+/* 読み取り方式の表示（v0.7.7） */
+.image-bar .engine-badge{padding:4px 8px;border:1px solid #cfe3d2;color:#1b5e20;font-size:9px;font-weight:700;background:#f2f8f3}.image-bar .engine-badge:hover{border-color:#1b5e20;color:#1b5e20}.image-bar .engine-badge.is-html{border-color:#d8d8d8;color:#525252;background:#f5f5f5}.image-bar .engine-badge.is-wait{border-color:#f3d9a4;color:#b45309;background:#fff8ec}
+
+/* 語尾をまとめて変換（v0.7.11）：操作説明の見出し行にボタンと選択メニューを置きます */
+.step-fields .field-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.frame-reset-menu.style-menu{left:auto;right:0;top:22px;width:230px;transform:none}
+.frame-reset-menu.style-menu button{display:flex;justify-content:space-between;gap:8px}
+.frame-reset-menu.style-menu button small{color:#8a8a8a;font-size:8px}
+.frame-reset-menu.style-menu button.current{color:#1b5e20;font-weight:800}
+.frame-reset-menu.style-menu button:hover:not(:disabled){color:#1b5e20;background:#eef6ef}
+body.dark-mode .frame-reset-menu.style-menu{border-color:#3a3a3a;background:#1c1c1c}
+body.dark-mode .frame-reset-menu.style-menu button{color:#ddd;background:#1c1c1c}
+body.dark-mode .frame-reset-menu.style-menu button:hover:not(:disabled){color:#9be0a5;background:#243026}
+
+/* ---- 表紙の文書管理項目（v0.7.11）---- */
+.cover-dialog .dialog-panel{width:min(680px,calc(100vw - 40px))}
+.cover-form{max-height:calc(100vh - 170px);overflow:auto}
+.cover-form .design-field textarea{width:100%;min-width:0;padding:7px 8px;border:1px solid #d8d8d8;color:#111;font-size:11px;line-height:1.5;resize:vertical;outline:none;background:#fff}
+.cover-form .design-field textarea:focus{border-color:#111}
+.cover-section{margin-top:12px;border-top:1px solid #e5e5e5;padding-top:8px}
+.cover-section summary{display:flex;align-items:center;gap:8px;color:#333;font-size:10px;font-weight:750;cursor:pointer;list-style:none}
+.cover-section summary::before{content:"▸";color:#8a8a8a;font-size:9px}
+.cover-section[open] summary::before{content:"▾"}
+.cover-section summary::-webkit-details-marker{display:none}
+.cover-section-state{margin-left:auto;color:#8a8a8a;font-size:8px;font-weight:400}
+.cover-section .design-fields{margin-top:8px}
+.cover-check{display:flex;align-items:center;gap:6px;margin:8px 0 6px;color:#333;font-size:9px}
+.cover-check input{accent-color:#1b5e20}
+.cover-help{margin:6px 0 0;color:#8a8a8a;font-size:8px;line-height:1.5}
+.approval-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.approval-grid.disabled{opacity:.45;pointer-events:none}
+.approval-cell{display:flex;flex-direction:column;gap:4px;padding:8px;border:1px solid #d8d8d8}
+.approval-cell input{width:100%;min-width:0;padding:5px 6px;border:1px solid #d8d8d8;font-size:10px;outline:none;background:#fff}
+.approval-cell input:focus{border-color:#111}
+.approval-cell .approval-label{font-weight:750}
+.approval-cell small{color:#8a8a8a;font-size:8px}
+.revision-table{display:grid;grid-template-columns:70px 90px minmax(0,1fr) 90px 26px;gap:4px;margin-top:8px;align-items:center}
+.revision-table .revision-head{color:#8a8a8a;font-size:8px}
+.revision-table input{width:100%;min-width:0;padding:5px 6px;border:1px solid #d8d8d8;font-size:10px;outline:none;background:#fff}
+.revision-table input:focus{border-color:#111}
+.revision-table .revision-remove{width:26px;height:26px;border:1px solid #d8d8d8;color:#8a8a8a;font-size:12px;line-height:1;background:#fff}
+.revision-table .revision-remove:hover{border-color:#b42318;color:#b42318}
+.revision-table .revision-empty{grid-column:1/-1;color:#8a8a8a;font-size:9px}
+.revision-actions{display:flex;align-items:flex-start;gap:10px;margin-top:8px}
+.revision-actions button{flex:none;padding:6px 10px;border:1px solid #1b5e20;border-radius:999px;color:#1b5e20;font-size:9px;font-weight:750;background:#fff}
+.revision-actions button:hover{color:#fff;background:#1b5e20}
+body.dark-mode .cover-section{border-color:#3a3a3a}body.dark-mode .cover-section summary,body.dark-mode .cover-check{color:#eee}
+body.dark-mode .cover-form .design-field textarea,body.dark-mode .approval-cell input,body.dark-mode .revision-table input{color:#eee;background:#262626;border-color:#3a3a3a}
+body.dark-mode .approval-cell{border-color:#3a3a3a}
+
+/* 表紙ダイアログの保存／キャンセル（v0.7.11） */
+.cover-dialog .dialog-panel footer.cover-footer{align-items:center}
+.cover-dialog .dialog-panel footer .cover-dirty{margin-right:auto;color:#b42318;font-size:9px;font-weight:700}
+.cover-dialog .dialog-panel footer .cover-dirty[hidden]{display:none!important}
+.cover-dialog .dialog-panel footer .primary{border-color:#1b5e20;color:#fff;background:#1b5e20}
+.cover-dialog .dialog-panel footer .primary:hover:not(:disabled){border-color:#144619;background:#144619}
+.cover-dialog .dialog-panel footer .primary:disabled{opacity:.4;cursor:default}
+
+/* セクションを選ぶ（v0.7.16） */
+.export-sections{max-height:180px;overflow:auto;margin:6px 10px 8px;padding:4px 0;border:1px solid #d8d8d8;background:#fffde7}
+.export-sections[hidden]{display:none!important}
+.export-sections label{display:flex;align-items:flex-start;gap:6px;padding:5px 8px;color:#333;font-size:10px;line-height:1.4;cursor:pointer}
+.export-sections label:hover{background:#f7f4dc}
+.export-sections input{margin:2px 0 0;accent-color:#1b5e20;flex:none}
+.export-sections .section-count{margin-left:auto;color:#8a8a8a;font-size:9px;white-space:nowrap}
+.export-sections .section-actions{display:flex;gap:10px;padding:4px 8px 2px;border-top:1px solid #eee}
+.export-sections .section-actions button{padding:0;border:0;color:#1b5e20;font-size:9px;background:none;text-decoration:underline}
+body.dark-mode .export-sections{border-color:#3a3a3a;background:#262626}body.dark-mode .export-sections label{color:#ddd}body.dark-mode .export-sections label:hover{background:#303030}
+/* v0.7.25：ヘッダーのガイドのタイトルと説明は常に上下に並べる（横に広い画面では inline-block の2つの入力欄が左右に並んでいた） */
+.document-name #guideTitle,.document-name #guideDescription{display:block;margin-left:auto;margin-right:auto}
+/* v0.7.25：セクション見出しの目のアイコン（見出しページを出力に挟む／挟まない） */
+.section-head .section-page-toggle{width:18px;height:18px;display:grid;place-items:center;padding:0;border:0;color:#1b5e20;background:none;cursor:pointer}
+.section-head .section-page-toggle svg{width:13px;height:13px}
+.section-head .section-page-toggle.off{color:#b42318}
+.section-head .section-page-toggle:hover{color:#111}

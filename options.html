@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>TADORU. – 詳細設定</title>
+    <link rel="stylesheet" href="options.css">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="icons/icon128.png">
+    <link rel="stylesheet" href="web.css">
+</head>
+<body>
+    <main class="page">
+        <header class="page-header">
+            <div><h1>詳細設定</h1></div>
+            <div class="header-tools">
+                <span class="lang-label">言語</span>
+                <select id="languageSelect" class="lang-select" title="表示言語" aria-label="表示言語">
+                    <option value="system">システム / System</option>
+                    <option value="ja">日本語</option>
+                    <option value="en">English</option>
+                </select>
+                <button id="closeTab" class="close-tab-button" type="button" title="この設定タブを閉じる">タブを閉じる</button>
+            </div>
+        </header>
+
+        <nav class="tab-nav" role="tablist" aria-label="設定カテゴリ">
+            <button type="button" class="tab-button active" data-tab="tab-privacy" role="tab" aria-selected="true">プライバシー保護</button>
+            <button type="button" class="tab-button" data-tab="tab-record" role="tab" aria-selected="false">記録</button>
+            <button type="button" class="tab-button" data-tab="tab-display" role="tab" aria-selected="false">表示の既定</button>
+            <button type="button" class="tab-button" data-tab="tab-custom" role="tab" aria-selected="false">独自の保護対象</button>
+            <button type="button" class="tab-button" data-tab="tab-diagnostics" role="tab" aria-selected="false" hidden>診断</button>
+        </nav>
+
+        <section id="tab-privacy" class="tab-pane active" role="tabpanel">
+            <p class="pane-desc">スクリーンショットを保存する前に対象領域を黒塗りし、元画像は保持しません。</p>
+            <div class="setting-card">
+                <div class="setting-row engine-row"><div>
+                    <strong>読み取り方式</strong>
+                    <span>スクリーンショットのどこを黒塗りするかを見つける方法です。どの方式も使用料無料で、画像や文字を外部へ送ることはありません。</span>
+                    <div class="engine-list" role="radiogroup" aria-label="読み取り方式">
+                        <label class="engine-option"><input type="radio" name="maskEngine" value="html"><div><strong>簡易方式</strong><span>撮影と同時に処理します。待ち時間はありません。入力欄と、メール・電話・郵便番号・数字・独自の語句に加え、入力欄の種類（tel・email・autocomplete）と項目名（「住所」「担当者」など）の隣にある値も対象です。使用料無料・外部送信なし。</span></div></label>
+                        <label class="engine-option"><input type="radio" name="maskEngine" value="ocr"><div><strong>OCR方式（既定）</strong><span>記録後、編集画面で画像から文字を読み取ります。初回のみ約4秒（部品の起動）、以降は1スライドあたり約2〜4秒。氏名・住所・項目名からの推定に対応。使用料無料・外部送信なし。</span></div></label>
+                    </div>
+                </div></div>
+                <label class="setting-row"><div><strong>入力欄を自動マスク</strong><span>テキスト欄、テキストエリア、編集可能領域を対象にします。</span></div><input id="autoRedactFields" type="checkbox"></label>
+                <label class="setting-row"><div><strong>メールアドレスを検出</strong><span>画面内の一般的なメールアドレス形式を対象にします。</span></div><input id="autoRedactEmail" type="checkbox"></label>
+                <label class="setting-row"><div><strong>電話番号を検出</strong><span>国内電話番号（0 始まり・+81）と、国際形式（+1・+44 など国番号付き）を対象にします。</span></div><input id="autoRedactPhone" type="checkbox"></label>
+                <label class="setting-row"><div><strong>郵便番号を検出</strong><span>123-4567および〒123-4567形式を対象にします。</span></div><input id="autoRedactPostalCode" type="checkbox"></label>
+                <label class="setting-row"><div><strong>6桁以上の数値を検出</strong><span>誤検出が増えるため、必要な場合だけ有効にしてください。</span></div><input id="autoRedactNumbers" type="checkbox"></label>
+                <label class="setting-row"><div><strong>氏名を検出</strong><span>「氏名」「契約者名」「担当者」などの項目名の隣（右・下）にある値、または「様」「殿」「さん」の前にある名前を黒塗りします。OCR方式・簡易方式のどちらでも働きます。推定のため、名前でない語を隠すことや、項目名の無い名前を見逃すことがあります。</span></div><input id="ocrNames" type="checkbox"></label>
+                <label class="setting-row"><div><strong>住所を検出</strong><span>都道府県から始まり市区町村・番地まで続く住所と、「住所」「所在地」「都道府県」などの項目名の隣にある値を黒塗りします。OCR方式・簡易方式のどちらでも働きます。</span></div><input id="ocrAddresses" type="checkbox"></label>
+                <label class="setting-row"><div><strong>生年月日・年齢を検出</strong><span>「生年月日」「誕生日」「年齢」などの項目名の隣（右・下）にある値を黒塗りします（西暦・和暦を問わず）。日付そのものを形で判定すると契約日・作成日まで消えるため、項目名の隣だけを対象にします。簡易方式・OCR方式の両方で働きます。</span></div><input id="autoRedactBirth" type="checkbox"></label>
+                <label class="setting-row"><div><strong>自動マスクを後から編集できるようにする</strong><span>マスクを図形オブジェクトとして重ねるため、位置やサイズを直せます。既定は有効です。無効にすると保存前に画像へ焼き込むため後から直せませんが、マスク前の画像は一切残りません（有効時はマスク前の画像がこの端末のローカル保存領域に残ります。外部送信はなく、出力物はマスク済みです）。</span></div><input id="editableAutoMask" type="checkbox"></label>
+            </div>
+            <section class="notice"><strong>重要</strong><p>自動検出は完全ではありません。出力前に必ずプレビューを確認し、必要に応じて編集画面で「ぼかし」または「黒塗り」を追加してください。</p></section>
+        </section>
+
+        <section id="tab-custom" class="tab-pane" role="tabpanel">
+            <p class="pane-desc">会社名、顧客名、項目のCSSセレクタなどを追加できます。</p>
+            <div class="setting-card form-card">
+                <label><strong>検出する語句</strong><span>1行に1語。画面内に一致する文字列があれば、その文字領域をマスクします。</span><textarea id="customTerms" rows="5" placeholder="株式会社サンプル&#10;管理番号12345"></textarea></label>
+                <label><strong>常にマスクするCSSセレクタ</strong><span>1行に1つ。不正なセレクタは無視されます。</span><textarea id="customSelectors" rows="5" placeholder=".customer-name&#10;[data-field='phone']"></textarea></label>
+                <label class="setting-row compact"><div><strong>画像内の文字を自動で検出してマスクする（OCR）</strong><span>記録を終えて編集画面を開いたとき、まだ処理していない手順の画像を端末内で文字認識し、上の条件（メール・電話・郵便番号・数字・検出する語句）に一致する部分を黒塗りします。画像・PDF・画面全体モードで撮った画面の番号にも効きます。OFF にすると編集画面の「文字を検出してマスク」ボタンで手順ごとに実行します。画像は外部へ送りません。</span></div><input id="ocrAuto" type="checkbox"></label>
+                <label><strong>記録しないサイト（URL の前方一致）</strong><span>1行に1つ。ここに書いた文字列で始まる URL のページでは、記録中に操作しても手順を追加せず、スクリーンショットも撮りません（手動撮影 Alt+Shift+S も含む）。銀行・個人のサイトなどを守る用途です。例：https://www.example-bank.co.jp/</span><textarea id="excludedUrls" rows="5" placeholder="https://www.example-bank.co.jp/&#10;https://mail.google.com/"></textarea></label>
+            </div>
+        </section>
+
+        <section id="tab-record" class="tab-pane" role="tabpanel">
+            <p class="pane-desc">画質を上げるほど、ガイドの保存容量が増えます。</p>
+            <div class="setting-card form-card grid-two">
+                <label><strong>画像形式</strong><select id="screenshotFormat"><option value="jpeg">JPEG（推奨）</option><option value="png">PNG</option></select></label>
+                <label><strong>JPEG画質</strong><div class="range"><input id="screenshotQuality" type="range" min="40" max="100"><output id="qualityOutput"></output></div></label>
+                <label><strong>クリック後の待機時間</strong><div class="with-unit"><input id="captureDelayMs" type="number" min="0" max="800"><span>ms</span></div></label>
+                <label class="setting-row compact"><div><strong>記録中の通知を表示</strong><span>Webページ右下に緑色の記録表示を出します。</span></div><input id="showCaptureNotice" type="checkbox"></label>
+                <label class="setting-row compact"><div><strong>URLを手順に保存</strong><span>ユーザー名とパスワード部分は除去します。</span></div><input id="includeUrls" type="checkbox"></label>
+                <label class="setting-row compact"><div><strong>ブラウザのウィンドウだけを切り出す</strong><span>アドバンスモードのときだけ働きます。画面全体からChromeのウィンドウ部分だけを切り出して保存します。デスクトップやタスクバー、他のアプリが写り込みません。右クリックメニューは少し外側にはみ出すことがあるため、周囲に余白を付けて切り出します。</span></div><input id="cropWindowOnly" type="checkbox"></label>
+                <label class="setting-row compact"><div><strong>画面の変化も自動で手順にする</strong><span>アドバンスモードのときだけ働きます。印刷プレビュー、ファイル選択、右クリックメニューの選択結果など、Webページ側にイベントが届かない場面を、画面の変化から検出して手順にします。</span></div><input id="watchScreenChanges" type="checkbox"></label>
+                <label class="setting-row compact shortcut-row"><div><strong>ショートカットキー</strong><span id="shortcutSummary">読み込み中…</span><span class="shortcut-note">Chromeが管理しているため、変更はChromeの設定画面で行います。</span></div><button id="openShortcuts" type="button">ショートカットを変更</button></label>
+                <label class="setting-row compact"><div><strong>ホバーで開くメニューを撮影する</strong><span>マウスを乗せて開くメニュー（ドロップダウン・ツールチップ）を、開いてから少し待って撮影し「〜にマウスを合わせます」の手順にします。誤検出が増える場合は OFF にしてください。</span></div><input id="recordHover" type="checkbox"></label>
+                <label class="setting-row compact"><div><strong>キー操作を記録する</strong><span>Ctrl+S・Ctrl+Enter などの組み合わせと、Enter・Tab・Esc を「Ctrl+S キーを押します」の手順にします。文字の入力そのものは記録しません。</span></div><input id="recordKeys" type="checkbox"></label>
+                <label class="setting-row compact"><div><strong>スクロールを記録する</strong><span>ページや一覧をスクロールして止まったとき、「下にスクロールします」を1手順として入れます。</span></div><input id="recordScroll" type="checkbox"></label>
+                <label class="setting-row compact"><div><strong>ドロップダウンで選んだ値を説明文に入れる</strong><span>「『支店』で『新宿』を選択します」のように、選択肢の文字を説明文に含めます。選択肢が個人情報を含む場合は OFF のままにしてください（入力欄に打った文字は設定にかかわらず保存しません）。</span></div><input id="recordSelectValue" type="checkbox"></label>
+                <label class="setting-row compact"><div><strong>説明文の語尾</strong><span>自動生成する操作説明の語尾です。「〜します」（ます調）／「〜をクリック」（体言止め）／「〜する」（常体）／「〜を押下」（体言止め・押下）。今後記録する手順に効きます。作成済みのガイドは、編集画面の操作説明の横「語尾をまとめて変換」で変えられます。</span></div><select id="descriptionStyle"></select></label>
+                <label class="setting-row compact"><div><strong>記録中のバッジに手順数を出す</strong><span>アイコンの赤いバッジに「REC」の代わりに手順の数（例：12）を表示します。</span></div><input id="badgeStepCount" type="checkbox"></label>
+                <label class="setting-row compact"><div><strong>タブ・ウィンドウの切り替えも記録</strong><span>新しいタブが開いたとき、タブを切り替えたとき、別ウィンドウに移ったときにも手順とスクリーンショットを追加します。</span></div><input id="recordTabSwitches" type="checkbox"></label>
+                <label class="setting-row compact"><div><strong>追加で撮影のとき、その手順のページを新しいタブで開く</strong><span>編集画面の「追加で撮影」を押したとき、選択中の手順の URL を新しいタブで開いてから記録を始めます。OFF のときは、直近に使っていた通常のページのタブに切り替えて記録を始めます（chrome:// や拡張機能のページは撮影できないため飛ばします）。</span></div><input id="resumeOpensUrl" type="checkbox"></label>
+            </div>
+        </section>
+
+        <section id="tab-display" class="tab-pane" role="tabpanel">
+            <p class="pane-desc">操作手順番号・テキスト・矢印の色や太さと、ガイドの既定フォントを設定します。編集画面を開いたときの初期値になります。</p>
+            <div class="setting-card display-card">
+                <div class="display-group">
+                    <strong>操作手順番号</strong>
+                    <div class="display-controls">
+                        <label>色<input id="targetColor" type="color"></label>
+                        <label>太さ<select id="targetSize"></select></label>
+                    </div>
+                </div>
+                <div class="display-group">
+                    <strong>テキスト</strong>
+                    <div class="display-controls">
+                        <label>色<input id="textColor" type="color"></label>
+                        <label>文字サイズ<select id="textSize"></select></label>
+                    </div>
+                    <div class="display-controls">
+                        <label>枠線<input id="textBorderOn" type="checkbox"></label>
+                        <label>太さ<select id="textBorderWidth"></select></label>
+                        <label>色<input id="textBorderColor" type="color"></label>
+                    </div>
+                    <div class="display-controls">
+                        <label>背景<input id="textBackgroundOn" type="checkbox"></label>
+                        <label>色<input id="textBackgroundColor" type="color"></label>
+                        <label class="opacity-label">透過<input id="textBackgroundOpacitySlider" type="range" min="0" max="100" step="5"><input id="textBackgroundOpacity" type="number" min="0" max="100" step="1"><span class="unit">%</span></label>
+                    </div>
+                </div>
+                <div class="display-group">
+                    <strong>図形</strong>
+                    <div class="display-controls">
+                        <label>線の色<input id="highlightColor" type="color"></label>
+                        <label>形<select id="highlightShape"></select></label>
+                        <label>線種<select id="highlightDash"></select></label>
+                    </div>
+                    <div class="display-controls">
+                        <label>塗りの色<input id="highlightFillColor" type="color"></label>
+                        <label class="opacity-label">塗りの濃さ<input id="highlightFillOpacitySlider" type="range" min="0" max="100" step="5"><input id="highlightFillOpacity" type="number" min="0" max="100" step="1"><span class="unit">%</span></label>
+                    </div>
+                </div>
+                <div class="display-group">
+                    <strong>矢印</strong>
+                    <div class="display-controls">
+                        <label>色<input id="arrowColor" type="color"></label>
+                        <label>太さ<select id="arrowSize"></select></label>
+                    </div>
+                </div>
+                <div class="display-group">
+                    <strong>フリーハンド</strong>
+                    <div class="display-controls">
+                        <label>ペンの色<input id="penColor" type="color"></label>
+                        <label>太さ<select id="penSize"></select></label>
+                    </div>
+                    <div class="display-controls">
+                        <label>蛍光ペンの色<input id="highlighterColor" type="color"></label>
+                        <label>太さ<select id="highlighterSize"></select></label>
+                        <label class="opacity-label">濃さ<input id="highlighterOpacitySlider" type="range" min="5" max="100" step="5"><input id="highlighterOpacity" type="number" min="5" max="100" step="1"><span class="unit">%</span></label>
+                    </div>
+                </div>
+                <div class="display-group">
+                    <strong>既定フォント</strong>
+                    <div class="display-controls">
+                        <label class="font-wide"><select id="fontFamily"></select></label>
+                    </div>
+                    <p class="font-sample" id="fontSample">サンプル Sample 123 手順書</p>
+                </div>
+                <div class="display-group">
+                    <strong>編集画面のツールバー</strong>
+                    <label class="setting-row compact"><div><strong>編集画面をダークモードにする</strong><span>編集画面の背景・パネルを暗い配色にします。撮影画像や出力物の色は変わりません。</span></div><input id="darkMode" type="checkbox"></label>
+                    <label class="setting-row compact"><div><strong>詳細（色・太さ・形など）を常に表示する</strong><span>OFF にすると「選択・図形・矢印…」のタブだけになり、タブを押した間だけ詳細が出ます（Excel・PowerPoint のリボンと同じ）。編集画面では、ツールバー右端の▲ボタン、選択中のタブをもう一度クリック、タブのダブルクリックでも切り替えられます。</span></div><input id="toolbarPinned" type="checkbox"></label>
+                </div>
+                <div class="display-group">
+                    <strong>スライドショー</strong>
+                    <label class="setting-row compact"><div><strong>レーザーポインターの残像</strong><span>スライドショーで L キーのレーザーを動かしたときに、赤い軌跡をどのくらい残すかです。「なし」は赤い点だけを表示します。</span></div><select id="laserTrail"></select></label>
+                </div>
+                <div class="display-group">
+                    <strong>出力</strong>
+                    <label class="setting-row compact"><div><strong>ページ下部にテキストを入れる</strong><span>会社名やcopyrightなどを、出力（印刷・PDF・HTML・PowerPoint・Word）の各ページ下部に小さく表示します。</span></div><input id="footerEnabled" type="checkbox"></label>
+                    <div class="display-controls">
+                        <label class="font-wide">表示するテキスト<input id="footerText" type="text" maxlength="200" placeholder="例：© 2026 ○○株式会社"></label>
+                        <label>位置<select id="footerAlign"></select></label>
+                    </div>
+                    <label class="setting-row compact"><div><strong>手順の参考URLを出力に載せる</strong><span>各手順の下に記録時のページURLを表示します（印刷・PDF・HTML・Markdown）。</span></div><input id="showStepUrls" type="checkbox"></label>
+                    <label class="setting-row compact"><div><strong>表紙ページを付ける</strong><span>出力の先頭に、文書名・文書番号・版数・作成日・作成部署・機密区分を載せた表紙を1ページ（1スライド）入れます。項目は編集画面のタイトル下に出る「表紙」ボタンで入力します。印刷・PDF・HTML・PowerPoint・Word・Markdown・スライドショーに反映されます。</span></div><input id="coverPage" type="checkbox"></label>
+                    <label class="setting-row compact"><div><strong>目次ページを付ける</strong><span>表紙の次に目次を1ページ入れます。セクション（章）があれば章と手順、なければ手順の一覧とページ番号です。印刷・PDF では見出しから PDF のしおり（アウトライン）も作られます。</span></div><input id="tocPage" type="checkbox"></label>
+                    <label class="setting-row compact"><div><strong>セクション見出しのページを出力に挟む</strong><span>編集画面で付けたセクション（章）の名前を、章の先頭に1ページ（1スライド）として入れます。スライドショーでも章タイトル画面が出ます。OFFでもセクションは編集画面の整理用として使えます。これは既定で、編集画面の手順一覧にあるセクション見出しの目のアイコンで、セクションごとに挟む／挟まないを個別に指定できます。</span></div><input id="sectionPages" type="checkbox"></label>
+                </div>
+                <div class="display-group">
+                    <strong>デザインの既定（スライドマスター）</strong>
+                    <p class="display-note">全ページ共通のヘッダー帯・ロゴ・背景色・ページ番号です。ここが既定になり、編集画面の「デザイン」タブでガイドごとに上書きできます。帯・ロゴ・ページ番号は出力1ページ（用紙／スライド1枚）の余白に付き、撮影画像には重なりません。</p>
+                    <label class="setting-row compact"><div><strong>ヘッダー帯</strong><span>各ページの上に色の帯を入れます。文字はガイド名・セクション名・任意の文字から選べます。</span></div><input id="designHeaderEnabled" type="checkbox"></label>
+                    <div class="display-controls">
+                        <label>色<input id="designHeaderColor" type="color" value="#1b5e20"></label>
+                        <label class="design-check"><input id="designHeaderColorNone" type="checkbox" checked>色なし</label>
+                        <label class="opacity-label" title="帯の色の濃さ。100%＝不透明。テンプレート画像や背景色が帯を透けて見えます。Word は透過を表せないため、背景色と混ぜた色で出力します">透過<input id="designHeaderOpacitySlider" type="range" min="0" max="100" step="5"><input id="designHeaderOpacity" type="number" min="0" max="100" step="1"><span class="unit">%</span></label>
+                        <label>高さ<select id="designHeaderSize" title="小=58 / 中=83 / 大=115"></select></label>
+                        <label><input id="designHeaderHeight" class="design-number" type="number" min="1" max="115" step="1" value="58" title="ページの幅を1280pxとしたときの高さ（px）。1〜115（大）">px</label>
+                        <label>文字<select id="designHeaderText"></select></label>
+                        <label>文字色<input id="designHeaderTextColor" type="color" value="#111111"></label>
+                        <label class="font-wide">任意の文字<input id="designHeaderCustom" type="text" maxlength="120" placeholder="例：社内向け操作マニュアル"></label>
+                    </div>
+                    <div class="setting-row compact design-logo-row"><div><strong>ロゴ</strong><span>PNG・JPEG・GIF・WebP・SVG。500KBを超える画像は自動で縮小し、ガイドと一緒に保存・出力に埋め込みます。</span></div><span class="design-logo-actions"><img id="designLogoPreview" alt="" hidden><button id="designLogoPick" type="button" class="ghost">取り込み</button><button id="designLogoRemove" type="button" class="ghost" hidden>削除</button><input id="designLogoFile" type="file" accept="image/*" hidden></span></div>
+                    <div class="display-controls">
+                        <label>ロゴの位置<select id="designLogoPosition"></select></label>
+                        <label>ロゴの大きさ<select id="designLogoSize"></select></label>
+                        <label>ページの背景色<input id="designBackground" type="color" value="#ffffff"></label>
+                    </div>
+                    <div class="setting-row compact design-logo-row"><div><strong>テンプレート画像</strong><span>会社のテンプレートなどを画像にしたものをページ全体の背景に敷きます。PNG・JPEG・GIF・WebP・SVG。長辺1920px・1MBを超える画像は自動で縮小します。撮影画像は今までどおり上に載ります。</span></div><span class="design-logo-actions"><img id="designBackgroundPreview" alt="" hidden><button id="designBackgroundPick" type="button" class="ghost">取り込み</button><button id="designBackgroundRemove" type="button" class="ghost" hidden>削除</button><input id="designBackgroundFile" type="file" accept="image/*" hidden></span></div>
+                    <div class="display-controls">
+                        <label>合わせ方<select id="designBackgroundFit"></select></label>
+                    </div>
+                    <label class="setting-row compact"><div><strong>ページ番号</strong><span>各ページの下に「3 / 12」の形で入れます。非表示の手順とセクション見出しページは数えません（Word のみ Word のページ番号を使うため、見出しページも数えます）。</span></div><input id="designPageNumber" type="checkbox"></label>
+                    <div class="display-controls">
+                        <label>ページ番号の位置<select id="designPageNumberAlign"></select></label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tab-diagnostics" class="tab-pane" role="tabpanel">
+            <p class="pane-desc">記録がうまくいかないときに、状態と直近の動作ログを確認できます。外部には送信されません。</p>
+            <div class="setting-card">
+                <div class="diagnostics">
+                    <div class="diagnostics-actions">
+                        <button id="runDiagnostics" type="button">診断情報を取得</button>
+                        <button id="copyDiagnostics" type="button" disabled>コピー</button>
+                        <span id="diagnosticsState"></span>
+                    </div>
+                    <pre id="diagnosticsOutput" class="diagnostics-output" hidden></pre>
+                </div>
+            </div>
+        </section>
+
+        <div class="save-bar" id="saveBar"><span id="saveState">設定を読み込んでいます</span><button id="resetButton" type="button">初期設定に戻す</button><button id="saveButton" type="button">設定を保存</button></div>
+    </main>
+    <script src="web-shim.js"></script>
+    <script src="shared.js"></script>
+    <script src="i18n.js"></script>
+    <script src="options.js"></script>
+</body>
+</html>
