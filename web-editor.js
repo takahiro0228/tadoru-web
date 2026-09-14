@@ -3,6 +3,31 @@
     "use strict";
     if (!window.TadoruWeb) return;
     const id = new URLSearchParams(location.search).get("id");
+
+    /* 出力ファイル（PowerPoint・Word・Excel・HTML・Markdown・動画・JSON）を、スマホでは共有シートで送れるようにする。
+     * editor.js の downloadBlob() は <a download href="blob:…"> をクリックする作りなので、そのクリックを横取りします。
+     * 共有シートにファイルを渡せない環境（PC の一部ブラウザ）では従来どおりダウンロードします。 */
+    const MIME = { pptx: "application/vnd.openxmlformats-officedocument.presentationml.presentation", docx: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        xlsx: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", html: "text/html", md: "text/markdown", json: "application/json", mp4: "video/mp4", webm: "video/webm", gif: "image/gif", png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg" };
+    let shareBusy = false;
+    document.addEventListener("click", (event) => {
+        const anchor = event.target instanceof HTMLAnchorElement ? event.target : null;
+        if (!anchor || anchor.dataset.twFallback || !anchor.hasAttribute("download") || !anchor.href.startsWith("blob:") || !navigator.share || !navigator.canShare) return;
+        if (shareBusy) return;
+        event.preventDefault(); event.stopImmediatePropagation();
+        const name = anchor.getAttribute("download") || "tadoru-export";
+        const ext = (name.split(".").pop() || "").toLowerCase();
+        shareBusy = true;
+        fetch(anchor.href).then((r) => r.blob()).then(async (blob) => {
+            const file = new File([blob], name, { type: MIME[ext] || blob.type || "application/octet-stream" });
+            if (!navigator.canShare({ files: [file] })) throw new Error("fallback");
+            await navigator.share({ files: [file], title: name });
+        }).catch((error) => {
+            if (error && error.name === "AbortError") return;   // 共有シートを閉じただけ
+            // 共有できなければ従来のダウンロードに戻す
+            const a = document.createElement("a"); a.href = anchor.href; a.download = name; a.dataset.twFallback = "1"; document.body.appendChild(a); a.click(); a.remove();
+        }).finally(() => { shareBusy = false; });
+    }, true);
     document.addEventListener("DOMContentLoaded", () => {
         const brand = document.querySelector(".app-header .brand");
         if (brand) {

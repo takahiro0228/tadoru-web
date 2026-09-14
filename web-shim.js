@@ -15,7 +15,7 @@
     const INDEX_KEY = "pg_sessions_index";
     const SETTINGS_KEY = "pg_settings";
     const sessionKey = (id) => `pg_session_${id}`;
-    const VERSION = "0.7.25-web.3";
+    const VERSION = "0.7.25-web.4";
 
     let dbPromise = null;
     function openDb() {

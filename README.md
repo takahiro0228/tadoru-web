@@ -17,5 +17,5 @@ Chrome 拡張機能 TADORU. の編集画面と同じコードを、ブラウザ�
 - index.html / index.js / index.css — ホーム（ガイド一覧・取り込み）
 - web-shim.js — 拡張機能 API（chrome.*）の代替。IndexedDB に保存
 - web-editor.js / web.css — 編集画面へのスマホ向け追加（ホームへ戻る・共有）
-- editor.* / options.* / presenter.* / shared.js / pptx.js / video.js / ocr.js / i18n.js / ocr / video / icons — 拡張機能 v0.7.25 と同じ（Web 版 v0.7.25-web.3）
+- editor.* / options.* / presenter.* / shared.js / pptx.js / video.js / ocr.js / i18n.js / ocr / video / icons — 拡張機能 v0.7.25 と同じ（Web 版 v0.7.25-web.4）
 - manifest.webmanifest / sw.js — ホーム画面追加・オフライン動作
