@@ -15,7 +15,7 @@
     const INDEX_KEY = "pg_sessions_index";
     const SETTINGS_KEY = "pg_settings";
     const sessionKey = (id) => `pg_session_${id}`;
-    const VERSION = "0.7.25-web.2";
+    const VERSION = "0.7.25-web.3";
 
     let dbPromise = null;
     function openDb() {
@@ -175,6 +175,15 @@
 
     // Web 版専用の道具（index.js から使う）
     root.TadoruWeb = { kv, listSessions, getSession, saveSession, deleteSession, importSessions, createId, getSettings, VERSION };
+
+    // 詳細設定の「タブを閉じる」は、スマホ（特にホーム画面から起動した Web 版）ではタブを閉じられないため、「ホームへ戻る」に置き換える
+    root.addEventListener("DOMContentLoaded", () => {
+        const close = document.getElementById("closeTab");
+        if (!close) return;
+        close.textContent = "ホームへ戻る";
+        close.title = "Web 版のホーム（ガイド一覧）へ戻ります";
+        close.addEventListener("click", (event) => { event.preventDefault(); event.stopImmediatePropagation(); root.location.href = "index.html"; }, true);
+    }, true);
 
     // Service Worker の登録（オフライン動作・ホーム画面追加）
     if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {

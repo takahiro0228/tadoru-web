@@ -1,6 +1,6 @@
 /* TADORU. Web 版 Service Worker：アプリ本体（HTML/JS/CSS/OCR部品）を端末に保存し、オフラインでも開けるようにします。
  * 外部への通信は行いません（同じフォルダのファイルだけを扱います）。 */
-const VERSION = "tadoru-web-0.7.25-web.2";
+const VERSION = "tadoru-web-0.7.25-web.3";
 const FILES = [
 "editor.css",
 "editor.html",
@@ -56,8 +56,15 @@ self.addEventListener("fetch", (event) => {
     if (event.request.method !== "GET") return;
     const url = new URL(event.request.url);
     if (url.origin !== location.origin) return;
-    event.respondWith(caches.match(event.request, { ignoreSearch: true }).then((hit) => hit || fetch(event.request).then((res) => {
+    const heavy = /\/(ocr|video|icons)\//.test(url.pathname);
+    if (heavy) {
+        // 大きな部品（OCR・動画・アイコン）は端末のコピーを優先
+        event.respondWith(caches.match(event.request, { ignoreSearch: true }).then((hit) => hit || fetch(event.request).then((res) => { if (res && res.ok) { const copy = res.clone(); caches.open(VERSION).then((c) => c.put(event.request, copy)); } return res; })));
+        return;
+    }
+    // 本体（HTML/JS/CSS）は最新を優先し、つながらないときだけ端末のコピーを使う（更新がすぐ反映されるように）
+    event.respondWith(fetch(event.request, { cache: "no-store" }).then((res) => {
         if (res && res.ok) { const copy = res.clone(); caches.open(VERSION).then((c) => c.put(event.request, copy)); }
         return res;
-    })));
+    }).catch(() => caches.match(event.request, { ignoreSearch: true })));
 });
