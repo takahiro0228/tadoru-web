@@ -15,7 +15,7 @@
     const INDEX_KEY = "pg_sessions_index";
     const SETTINGS_KEY = "pg_settings";
     const sessionKey = (id) => `pg_session_${id}`;
-    const VERSION = "0.7.25-web.1";
+    const VERSION = "0.7.25-web.2";
 
     let dbPromise = null;
     function openDb() {
@@ -161,7 +161,11 @@
         storage: { local: kv, session: kv, onChanged: { addListener() {}, removeListener() {} } },
         tabs: {
             create: async (opts) => { if (opts && opts.url) root.open(opts.url, "_blank"); return {}; },
-            remove: async () => { root.close(); },
+            remove: async () => {
+                // 「タブを閉じる」：スクリプトが開いたタブ以外はブラウザが window.close() を無視するため、閉じられなければホームへ戻る
+                root.close();
+                setTimeout(() => { if (!root.closed) { if (root.history.length > 1) root.history.back(); else root.location.href = "index.html"; } }, 150);
+            },
             query: async () => [],
             onActivated: { addListener() {} }, onUpdated: { addListener() {} }, onRemoved: { addListener() {} }
         },

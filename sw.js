@@ -1,6 +1,6 @@
 /* TADORU. Web 版 Service Worker：アプリ本体（HTML/JS/CSS/OCR部品）を端末に保存し、オフラインでも開けるようにします。
  * 外部への通信は行いません（同じフォルダのファイルだけを扱います）。 */
-const VERSION = "tadoru-web-0.7.25-web.1";
+const VERSION = "tadoru-web-0.7.25-web.2";
 const FILES = [
 "editor.css",
 "editor.html",
